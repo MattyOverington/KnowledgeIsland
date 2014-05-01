@@ -2,10 +2,23 @@ Notes
 ===============
 
 /*
-LISTEN ERP
-PLS CONSULT THE TODO LIST AND UPDATE IT ONCE ALL TASK ARE [COMPLETE].
-UPDATE EHT IF YOU THINK YOU ARE SEUR WHAT TO DO. TEK ENETIATIVE
-KDEN GOOD.
+NOTICES FOR THE GROUP:
+
+   TO DO LIST:
+      LISTEN ERP
+      PLS CONSULT THE TODO LIST AND UPDATE IT ONCE ALL TASK ARE 
+      [COMPLETE].
+      UPDATE EHT IF YOU THINK YOU ARE SEUR WHAT TO DO. TEK ENETIATIVE
+      KDEN GOOD.
+
+   CODE STYLING:
+      WE WILL BE STICKING COMPLETELY TO THE STYLE GUIDE:
+         3 SPACE TABS (CHANGE YOUR SETTINGS)
+         AND NEVER GOING OVER 72 CHARACTERS (THERE IS A HELPFUL
+         SETTING TO SET RULERS)
+            THIS APPLIES TO ALL FILES - NOT JUST CODE (THIS IS TO
+            MAKE IT LOOK PRETTY)
+      kthnxbye
 */
 
 Nope:
@@ -41,7 +54,9 @@ Plan:
          - Pointer to struct?
          - Name? - This one seems the best to meh
          - idk... swag?
-         - In the .h file there is a way of describing the owner of a campus with numbers that I think we have to use.
+         - In the .h file there is a way of describing the owner of a 
+           campus with numbers that I think we have to use.
+            - K let's do that
    - Is GO8 (the campus)
    - Etc. -- TODO fill in
 - Verticy struct:
