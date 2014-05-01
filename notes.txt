@@ -41,6 +41,7 @@ Plan:
          - Pointer to struct?
          - Name? - This one seems the best to meh
          - idk... swag?
+         - In the .h file there is a way of describing the owner of a campus with numbers that I think we have to use.
    - Is GO8 (the campus)
    - Etc. -- TODO fill in
 - Verticy struct:
