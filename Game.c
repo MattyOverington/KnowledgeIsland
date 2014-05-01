@@ -1,1 +1,1 @@
-//Hector - need to catch up on struct syntax, and everything else. Youtube blocked, tres difficile
+//Guize, still catching up on structs and stuff
