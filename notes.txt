@@ -1,0 +1,52 @@
+Notes
+===============
+
+/*
+LISTEN ERP
+PLS CONSULT THE TODO LIST AND UPDATE IT ONCE ALL TASK ARE [COMPLETE].
+UPDATE EHT IF YOU THINK YOU ARE SEUR WHAT TO DO. TEK ENETIATIVE
+KDEN GOOD.
+*/
+
+Nope:
+//Things To Do -
+//   Matt your wrong
+//   - Game.c
+//      - Set up data storage
+//         - Make structs for verts, edges and faces
+//         - Methods for doing pointers between arrays for us (?)
+//         - Other methods we think we'll need
+//         - Make lists, finialse and done??
+//         
+//   - Testing Stuff
+//      -???
+
+To do for now (needs updating):
+- Create structs for verts, edges, and regions in the .c
+- Make the game struct then put it in the .h as Game
+- Plan out how to do the list and pointers between them
+- Create the functions 
+
+Plan:
+- Have a player struct that stores things like:
+   - KPI
+   - Papers
+   - Patents
+   - Different types of student
+   - Etc. -- TODO fill in
+- Vertex struct:
+   - Owner (in other words, is there a campus on it, if so who owns it)
+      - This would be a dumby value if noone owns it
+      - Need to work out how to represent the owner
+         - Pointer to struct?
+         - Name? - This one seems the best to meh
+         - idk... swag?
+   - Is GO8 (the campus)
+   - Etc. -- TODO fill in
+- Verticy struct:
+   - Owner (in other words, is there a grant on it, if so who owns it)
+   - 
+- Region
+   - Student producer
+   - Dice number
+   - Etc. TODO fill in

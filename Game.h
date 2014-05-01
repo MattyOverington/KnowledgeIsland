@@ -61,7 +61,7 @@
 #define TRUE 1
 #define FALSE 0
  
-typedef struct _game * Game;
+typedef struct _game *Game;
  
 // your team designs this type not us
 // store in this struct all the things you might want to know about
