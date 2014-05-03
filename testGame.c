@@ -194,6 +194,8 @@ void testGetDiscipline (void) {
       regionID ++;
    }
 
+   disposeGame (g);
+
    printf("Passed!\n");
 }
 
@@ -215,21 +217,68 @@ void testGetDiceValue (void) {
 
    g = newGame (disciplines, dice);
 
-   int regionID = 0;
-
    // Loops over all the regions checking they were assigned
    // the correct dice value
+
+   int regionID = 0;
 
    while (regionID < NUM_REGIONS) {
       assert (getDiceValue (g, regionID) == dice [regionID]);
       regionID ++;
    }
 
+   disposeGame (g);
+
    printf("Passed!\n");
 }
 
 void testGetWhoseTurn (void) {
-   // Test that 
+   // Test that rolling the dice and passing
+   // advances the value of getWhoseTurn correctly
+
+   printf("Testing getWhoseTurn\n");
+
+   // Create a new Game, values of stuff isn't important
+
+   Game g;
+
+   int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+   int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
+
+   g = newGame (disciplines, dice);
+
+   // Initialise an action that merely passes
+
+   action a;
+   a.actionCode = PASS;
+
+   // Run Tests
+
+   assert (getWhoseTurn (g) == NO_ONE);
+
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   assert (getWhoseTurn (g) == UNI_A);
+
+   makeAction (g, a);
+
+   assert (getWhoseTurn (g) == UNI_B);
+
+   makeAction (g, a);
+
+   assert (getWhoseTurn (g) == UNI_C);
+
+   makeAction (g, a);
+
+   assert (getWhoseTurn (g) == UNI_A);
+
+   disposeGame (g);
+
+   printf("Passed!\n");
 }
 
 
