@@ -20,29 +20,29 @@
 
 
 // Setters
-void testNewGame(void);
-void testdisposeGame(void);
-void testMakeAction(void);
-void testThrowDice(void);
+void testNewGame (void);
+void testdisposeGame (void);
+void testMakeAction (void);
+void testThrowDice (void);
 
 // Getters
-void testGetDiscipline(void);
-void testGetDiceValue(void);
-void testGetWhoseTurn(void);
-void testGetTurnNumber(void);
-void testGetMostARCs(void);
-void testGetMostPublications(void);
-void testGetCampus(void);
-void testGetARC(void);
-void testGsLegalAction(void);
-void testGetKPIpoints(void);
-void testGetARCs(void);
-void testGetGO8s(void);
-void testGetCampuses(void);
-void testGetIPs(void);
-void testGetPublications(void);
-void testGetStudents(void);
-void testGetExchangeRate(void);
+void testGetDiscipline (void);
+void testGetDiceValue (void);
+void testGetWhoseTurn (void);
+void testGetTurnNumber (void);
+void testGetMostARCs (void);
+void testGetMostPublications (void);
+void testGetCampus (void);
+void testGetARC (void);
+void testGsLegalAction (void);
+void testGetKPIpoints (void);
+void testGetARCs (void);
+void testGetGO8s (void);
+void testGetCampuses (void);
+void testGetIPs (void);
+void testGetPublications (void);
+void testGetStudents (void);
+void testGetExchangeRate (void);
 
 
 int main(int argc, char *argv[]) {
@@ -493,6 +493,12 @@ void testGetMostPublications (void) {
 
    assert (getMostPublications (g) == UNI_B);
 
+   // Cycle on to next player then test again, just to check
+
+   makeAction (g, pass);
+
+   assert (getMostPublications (g) == UNI_B);
+
    // End of tests! (? anything else Hector/Matt ?)
 
    disposeGame (g);
@@ -501,57 +507,300 @@ void testGetMostPublications (void) {
 }
 
 
-void testGetCampus(void) {
+void testGetCampus (void) {
+   // Test that adding a campus affects the result of getCampus
+   // accordingly
+
+   printf("Testing getCampus\n");
+
+   // Create a new Game, values of stuff again isn't important
+
+   Game g;
+
+   int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+   int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
+
+   g = newGame (disciplines, dice);
+
+   // Advance the game from "Terra Nullis"
+
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   // Initialise some actions
+
+   action addCampus;
+   addCampus.actionCode = BUILD_CAMPUS;
+
+   action addGO8;
+   addGO8.actionCode = BUILD_GO8;
+
+   action pass;
+   pass.actionCode = PASS;
+
+   // Assert that the starting campuses are where they should be
+
+   path pathToVertex = "RLLLLL"; // A path back to the original vertex
+   assert (getCampus (g, pathToVertex) == CAMPUS_A);
+
+   pathToVertex = "RLRLRLRLRLL"; // A path to the other initial campus
+                                // of player A
+   assert (getCampus (g, pathToVertex) == CAMPUS_A);
+
+   pathToVertex = "RRLRL"; // A path to one of the initial campuses
+                          // of player B
+   assert (getCampus (g, pathToVertex) == CAMPUS_B);
+
+   pathToVertex = "LRLRLRRLRL"; // A path to the other initial campus
+                               // of player B
+   assert (getCampus (g, pathToVertex) == CAMPUS_B);
+
+   pathToVertex = "LRLRL"; // A path to one of the initial campuses
+                          // of player C
+   assert (getCampus (g, pathToVertex) == CAMPUS_C);
+
+   pathToVertex = "RRLRLLRLRL"; // A path to the other initial campus
+                               // of player C
+   assert (getCampus (g, pathToVertex) == CAMPUS_C);
+
+   // Assert that empty vertexes are as they should be
+
+   pathToVertex = "R";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "RR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "RRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "RRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "L";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRRR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRRRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRRRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRRRLRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRRRLRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRRRLRLRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRRR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRRRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRRRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRRRLRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRRRLRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRRRLRLRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRRRLRLRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRRRLRLRLRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRRLRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRRLRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRRLRLRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRRLRLRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRRLRLRLRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRRLRLRLRLL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRLRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRLRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRLRLRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRLRLRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRLRLRLRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRLRLRLRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRLRLRLRLRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRLRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRLRLRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRLRLRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRLRLRLRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   // Assert that adding campuses and GO8's works with (and without) 
+   // convoluted paths
+
+   pathToVertex = "RL";
+   addCampus.destination = pathToVertex;
+   makeAction (g, addCampus);
+   assert (getCampus (g, pathToVertex) == CAMPUS_A);
+
+   pathToVertex = "LR";
+   addGO8.destination = pathToVertex;
+   makeAction (g, addGO8);
+   assert (getCampus (g, pathToVertex) == GO8_A);
+
+   makeAction (g, pass);
+
+   pathToVertex = "RLLLLLLLRL";
+   addCampus.destination = pathToVertex;
+   makeAction (g, addCampus);
+   assert (getCampus (g, pathToVertex) == CAMPUS_B);
+
+   pathToVertex = "RLRLLLLLLLLLBLR";
+   addGO8.destination = pathToVertex;
+   makeAction (g, addGO8);
+   assert (getCampus (g, pathToVertex) == GO8_B);
+
+   makeAction (g, pass);
+
+   pathToVertex = "LRLRRLBL";
+   addCampus.destination = pathToVertex;
+   makeAction (g, addCampus);
+   assert (getCampus (g, pathToVertex) == CAMPUS_C);
+
+   pathToVertex = "LRRLRL";
+   addGO8.destination = pathToVertex;
+   makeAction (g, addGO8);
+   assert (getCampus (g, pathToVertex) == GO8_C);
+
+   disposeGame (g);
+
+   printf("Passed!\n");
+}
+
+
+void testGetARC (void) {
 
 }
 
 
-void testGetARC(void) {
+void testIsLegalAction (void) {
 
 }
 
 
-void testGsLegalAction(void) {
+void testGetKPIpoints (void) {
 
 }
 
 
-void testGetKPIpoints(void) {
+void testGetARCs (void) {
 
 }
 
 
-void testGetARCs(void) {
+void testGetGO8s (void) {
 
 }
 
 
-void testGetGO8s(void) {
+void testGetCampuses (void) {
 
 }
 
 
-void testGetCampuses(void) {
+void testGetIPs (void) {
 
 }
 
 
-void testGetIPs(void) {
+void testGetPublications (void) {
 
 }
 
 
-void testGetPublications(void) {
+void testGetStudents (void) {
 
 }
 
 
-void testGetStudents(void) {
-
-}
-
-
-void testGetExchangeRate(void) {
+void testGetExchangeRate (void) {
 
 }
 
