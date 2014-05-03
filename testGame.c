@@ -20,29 +20,15 @@
 
 
 // Setters
-void testNewGame(void);
-void testdisposeGame(void);
-void testMakeAction(void);
-void testThrowDice(void);
+void testNewGame (void);
+void testMakeAction (void);
+void testThrowDice (void);
 
 // Getters
-void testGetDiscipline(void);
-void testGetDiceValue(void);
-void testGetWhoseTurn(void);
-void testGetTurnNumber(void);
-void testGetMostARCs(void);
-void testGetMostPublications(void);
-void testGetCampus(void);
-void testGetARC(void);
-void testGsLegalAction(void);
-void testGetKPIpoints(void);
-void testGetARCs(void);
-void testGetGO8s(void);
-void testGetCampuses(void);
-void testGetIPs(void);
-void testGetPublications(void);
-void testGetStudents(void);
-void testGetExchangeRate(void);
+void testGetDiscipline (void);
+void testGetDiceValue (void);
+void testGetWhoseTurn (void);
+void testGetTurnNumber (void);
 
 
 int main(int argc, char *argv[]) {
@@ -61,7 +47,7 @@ int main(int argc, char *argv[]) {
 // ---------------------------- Setters -------------------------- //
 // .oO0-------------------------------------------------------0Oo. //
 
-void testNewGame(void) {
+void testNewGame (void) {
    // All this does is check the program doesn't crash when
    // making a new game.
    // The actual creation and parameters will be checked in the
@@ -93,7 +79,7 @@ void testNewGame(void) {
 }
 
 
-void testThrowDice(void) {
+void testThrowDice (void) {
    // As above, test to see that throwing the dice doesn't result in
    // the game crashing.
 
@@ -125,7 +111,7 @@ void testThrowDice(void) {
 }
 
 
-void testMakeAction(void) {
+void testMakeAction (void) {
    // Again all this does is check the program doesn't crash
    // Whether the action worked will be tested in other functions
 
@@ -203,7 +189,7 @@ void testMakeAction(void) {
 // ---------------------------- Getters -------------------------- //
 // .oO0-------------------------------------------------------0Oo. //
 
-void testGetDiscipline(void) {
+void testGetDiscipline (void) {
    // Tests that getDiscipline returns the correct discipline
 
    printf("Testing getDiscipline\n");
@@ -237,7 +223,7 @@ void testGetDiscipline(void) {
 }
 
 
-void testGetDiceValue(void) {
+void testGetDiceValue (void) {
    // Tests that getDiceValue returns the correct discipline
 
    printf("Testing getDiceValue\n");
@@ -271,7 +257,7 @@ void testGetDiceValue(void) {
 }
 
 
-void testGetWhoseTurn(void) {
+void testGetWhoseTurn (void) {
    // Test that rolling the dice and passing
    // advances the value of getWhoseTurn correctly
 
@@ -320,7 +306,7 @@ void testGetWhoseTurn(void) {
    printf("Passed!\n");
 }
 
-void testGetTurnNumber(void) {
+void testGetTurnNumber (void) {
    // Test that taking three turns advances the turn number correctly
 
    printf("Testing getTurnNumber\n");
@@ -360,6 +346,7 @@ void testGetTurnNumber(void) {
 
    printf("Passed!\n");
 }
+
 
 
 
