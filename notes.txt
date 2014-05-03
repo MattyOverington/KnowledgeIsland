@@ -30,7 +30,6 @@ NOTICES FOR THE GROUP:
          SETTING TO SET RULERS)
             THIS APPLIES TO ALL FILES - NOT JUST CODE (THIS IS TO
             MAKE IT LOOK PRETTY)
-      kthnxbye
 /********************************************************************\
 
 Nope:

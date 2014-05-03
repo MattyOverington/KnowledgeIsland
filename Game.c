@@ -20,18 +20,18 @@
 
 typedef struct _game {
    // Map things
-   vertex *vertices[NUM_VERTICES];
-   edge *edges[NUM_EDGES];
-   region *regions[NUM_REGIONS];
+   vertex vertices[NUM_VERTICES];
+   edge edges[NUM_EDGES];
+   region regions[NUM_REGIONS];
 
    // Players
-   player *players[NUM_PLAYERS];
+   player players[NUM_PLAYERS];
 } game;
 
 typedef struct _vertex {
    // Adjacent things
-   edge *adjacentEdges[EDGES_PER_VERTEX];
-   region *adjacentRegions[REGIONS_PER_VERTEX];
+   edge adjacentEdges[EDGES_PER_VERTEX];
+   region adjacentRegions[REGIONS_PER_VERTEX];
 
    // Vertex attributes
    int owner;
@@ -40,7 +40,7 @@ typedef struct _vertex {
 
 typedef struct _edge {
    // Adjacent things
-   vertex *adjacentVertices[VERTICES_PER_EDGE];
+   vertex adjacentVertices[VERTICES_PER_EDGE];
 
    // Edge attributes
    int edgeContent;
@@ -48,7 +48,7 @@ typedef struct _edge {
 
 typedef struct _region {
    // Adjacent things
-   vertex *adjacentVertices[VERTICES_PER_REGION];
+   vertex adjacentVertices[VERTICES_PER_REGION];
 
    // Region attributes
    int studentType;
