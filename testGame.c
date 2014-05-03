@@ -1,10 +1,8 @@
-//
-//  testGame.c
-//  Tests for the Game Abstract Data Type
-//  Hector Morlet, Matthew Overington and Thomas Waring
-//  3 May 2014
-//
-
+// testGame.c
+// Tests the functions implemented in Game.c
+// Group Brown Sugar
+// Hector Morlet, Matty Overington and Thomas Waring
+// Commenced on Saturday the 3rd of May
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,39 +11,33 @@
 
 #include "Game.h"
 
-#define UNIMPORTANT_DICE_VALUE_FOR_TESTING 7; // wtf
+#define UNIMPORTANT_DICE_VALUE_FOR_TESTING 7;
 #define MIN_DICE_VALUE 2;
 #define MAX_DICE_VALUE 12;
 #define ARBITRARILY_LARGE_NUMBER_TO_TEST_TURNS_UP_TO 1000;
+#define TERRA_NULLIS -1;
 
-
-// Setters
 void testNewGame (void);
 void testMakeAction (void);
 void testThrowDice (void);
-
-// Getters
 void testGetDiscipline (void);
 void testGetDiceValue (void);
 void testGetWhoseTurn (void);
 void testGetTurnNumber (void);
-
+void testGetMostARCs (void);
 
 int main(int argc, char *argv[]) {
 
    testNewGame ();
    testMakeAction ();
+   testThrowDice ();
    testGetDiscipline ();
    testGetDiceValue ();
    testGetWhoseTurn ();
+   testGetTurnNumber ();
 
    return EXIT_SUCCESS;;
 }
-
-
-// .oO0-------------------------------------------------------0Oo. //
-// ---------------------------- Setters -------------------------- //
-// .oO0-------------------------------------------------------0Oo. //
 
 void testNewGame (void) {
    // All this does is check the program doesn't crash when
@@ -78,7 +70,6 @@ void testNewGame (void) {
    printf("Passed!\n");
 }
 
-
 void testThrowDice (void) {
    // As above, test to see that throwing the dice doesn't result in
    // the game crashing.
@@ -109,7 +100,6 @@ void testThrowDice (void) {
 
    printf("Passed!\n");
 }
-
 
 void testMakeAction (void) {
    // Again all this does is check the program doesn't crash
@@ -144,9 +134,9 @@ void testMakeAction (void) {
 
    makeAction (g, a);
 
-   // Test building a G08
+   // Test building a GO8
 
-   a.actionCode = BUILD_G08;
+   a.actionCode = BUILD_GO8;
 
    makeAction (g, a);
 
@@ -184,11 +174,6 @@ void testMakeAction (void) {
    printf("Passed!\n");
 }
 
-
-// .oO0-------------------------------------------------------0Oo. //
-// ---------------------------- Getters -------------------------- //
-// .oO0-------------------------------------------------------0Oo. //
-
 void testGetDiscipline (void) {
    // Tests that getDiscipline returns the correct discipline
 
@@ -221,7 +206,6 @@ void testGetDiscipline (void) {
 
    printf("Passed!\n");
 }
-
 
 void testGetDiceValue (void) {
    // Tests that getDiceValue returns the correct discipline
@@ -256,7 +240,6 @@ void testGetDiceValue (void) {
    printf("Passed!\n");
 }
 
-
 void testGetWhoseTurn (void) {
    // Test that rolling the dice and passing
    // advances the value of getWhoseTurn correctly
@@ -278,8 +261,8 @@ void testGetWhoseTurn (void) {
 
    // Initialise an action that merely passes
 
-   action a;
-   a.actionCode = PASS;
+   action pass;
+   pass.actionCode = PASS;
 
    // Run Tests
 
@@ -289,15 +272,15 @@ void testGetWhoseTurn (void) {
 
    assert (getWhoseTurn (g) == UNI_A);
 
-   makeAction (g, a);
+   makeAction (g, pass);
 
    assert (getWhoseTurn (g) == UNI_B);
 
-   makeAction (g, a);
+   makeAction (g, pass);
 
    assert (getWhoseTurn (g) == UNI_C);
 
-   makeAction (g, a);
+   makeAction (g, pass);
 
    assert (getWhoseTurn (g) == UNI_A);
 
@@ -326,23 +309,89 @@ void testGetTurnNumber (void) {
 
    // Initialise an action that merely passes
 
-   action a;
-   a.actionCode = PASS;
+   action pass;
+   pass.actionCode = PASS;
 
    // Run Tests
 
-   int turnNumber = -1; // That is "Terra Nullis"
+   int turnNumber = TERRA_NULLIS;
 
    while (turnNumber <= ARBITRARILY_LARGE_NUMBER_TO_TEST_TURNS_UP_TO) {
       assert (getTurnNumber (g) == turnNumber);
 
       // Make three turns, one for each player
-      makeAction (g, a);
-      makeAction (g, a);
-      makeAction (g, a);
+      makeAction (g, pass);
+      makeAction (g, pass);
+      makeAction (g, pass);
 
       turnNumber ++;
    }
+
+   printf("Passed!\n");
+}
+
+void testGetMostARCs (void) {
+   // Test the get most ARCs function
+   // Will use the makeAction function to do so
+
+   printf("Testing getMostARCs\n");
+
+   // Create a new Game, values of stuff again isn't important
+
+   Game g;
+
+   int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+   int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
+
+   g = newGame (disciplines, dice);
+
+   // Assert that the player with the most ARCs starts off as no one
+
+   assert (getMostARCs (g) == NO_ONE);
+
+   // Advance the game from "Terra Nullis"
+
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   // Initialise an action that adds an ARC and one that passes
+
+   action addARC;
+   addARC.actionCode = OBTAIN_ARC;
+
+   action pass;
+   pass.actionCode = PASS;
+
+   // Add an ARC for player A (the player whose turn it currently is)
+   // in a set position
+
+   addARC.destination = "R";
+   makeAction (g, addARC);
+
+   assert (getMostARCs (g) == UNI_A);
+
+   // Advance the turn to UNI_B and give them an ARC
+   // Then assert that UNI_A still has the title
+
+   makeAction (g, pass);
+   makeAction (g, addARC);
+
+   assert (getMostARCs (g) == UNI_A);
+
+   // Give UNI_B another ARC
+   // assert that now they have the title
+
+   addARC.destination = "L";
+   makeAction (g, addARC);
+
+   assert (getMostARCs (g) == UNI_B);
+
+   // End of tests! (? anything else Hector/Matt ?)
+
+   disposeGame (g);
 
    printf("Passed!\n");
 }
