@@ -7,12 +7,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <limits.h>
 
 #include "Game.h"
 
 #define UNIMPORTANT_DICE_VALUE_FOR_TESTING 7;
 #define MIN_DICE_VALUE 2;
 #define MAX_DICE_VALUE 12;
+#define ARBITRARILY_LARGE_NUMBER_TO_TEST_TURNS_UP_TO 1000;
 
 void testNewGame (void);
 void testMakeAction (void);
@@ -20,6 +22,7 @@ void testThrowDice (void);
 void testGetDiscipline (void);
 void testGetDiceValue (void);
 void testGetWhoseTurn (void);
+void testGetTurnNumber (void);
 
 int main(int argc, char *argv[]) {
 
@@ -27,6 +30,7 @@ int main(int argc, char *argv[]) {
    testMakeAction ();
    testGetDiscipline ();
    testGetDiceValue ();
+   testGetWhoseTurn ();
 
    return EXIT_SUCCESS;;
 }
@@ -35,7 +39,7 @@ void testNewGame (void) {
    // All this does is check the program doesn't crash when
    // making a new game.
    // The actual creation and parameters will be checked in the
-   // getter fucntions.
+   // getter functions.
    // Also tests for lack of crashing on disposal
 
    printf("Testing newGame\n");
@@ -112,7 +116,7 @@ void testMakeAction (void) {
 
    g = newGame (disciplines, dice);
 
-   // Throw the dice once to get the game out of "Terra Nullius"
+   // Throw the dice once to get the game out of "Terra Nullis"
 
    throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
@@ -277,6 +281,47 @@ void testGetWhoseTurn (void) {
    assert (getWhoseTurn (g) == UNI_A);
 
    disposeGame (g);
+
+   printf("Passed!\n");
+}
+
+void testGetTurnNumber (void) {
+   // Test that taking three turns advances the turn number correctly
+
+   printf("Testing getTurnNumber\n");
+
+   // Create a new Game, values of stuff isn't important
+
+   Game g;
+
+   int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+   int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
+
+   g = newGame (disciplines, dice);
+
+   // Initialise an action that merely passes
+
+   action a;
+   a.actionCode = PASS;
+
+   // Run Tests
+
+   int turnNumber = -1; // That is "Terra Nullis"
+
+   while (turnNumber <= ARBITRARILY_LARGE_NUMBER_TO_TEST_TURNS_UP_TO) {
+      assert (getTurnNumber (g) == turnNumber);
+
+      // Make three turns, one for each player
+      makeAction (g, a);
+      makeAction (g, a);
+      makeAction (g, a);
+
+      turnNumber ++;
+   }
 
    printf("Passed!\n");
 }
