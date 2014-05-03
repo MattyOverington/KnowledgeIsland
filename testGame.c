@@ -1,8 +1,10 @@
-// testGame.c
-// Tests the functions implemented in Game.c
-// Group Brown Sugar
-// Hector Morlet, Matty Overington and Thomas Waring
-// Commenced on Saturday the 3rd of May
+//
+//  testGame.c
+//  Tests for the Game Abstract Data Type
+//  Hector Morlet, Matthew Overington and Thomas Waring
+//  3 May 2014
+//
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,16 +12,21 @@
 
 #include "Game.h"
 
-#define UNIMPORTANT_DICE_VALUE_FOR_TESTING 7;
+#define UNIMPORTANT_DICE_VALUE_FOR_TESTING 7; // wtf
 #define MIN_DICE_VALUE 2;
 #define MAX_DICE_VALUE 12;
 
+
+// Setters
 void testNewGame (void);
 void testMakeAction (void);
 void testThrowDice (void);
+
+// Getters
 void testGetDiscipline (void);
 void testGetDiceValue (void);
 void testGetWhoseTurn (void);
+
 
 int main(int argc, char *argv[]) {
 
@@ -30,6 +37,11 @@ int main(int argc, char *argv[]) {
 
    return EXIT_SUCCESS;;
 }
+
+
+// .oO0-------------------------------------------------------0Oo. //
+// ---------------------------- Setters -------------------------- //
+// .oO0-------------------------------------------------------0Oo. //
 
 void testNewGame (void) {
    // All this does is check the program doesn't crash when
@@ -62,6 +74,7 @@ void testNewGame (void) {
    printf("Passed!\n");
 }
 
+
 void testThrowDice (void) {
    // As above, test to see that throwing the dice doesn't result in
    // the game crashing.
@@ -92,6 +105,7 @@ void testThrowDice (void) {
 
    printf("Passed!\n");
 }
+
 
 void testMakeAction (void) {
    // Again all this does is check the program doesn't crash
@@ -166,6 +180,11 @@ void testMakeAction (void) {
    printf("Passed!\n");
 }
 
+
+// .oO0-------------------------------------------------------0Oo. //
+// ---------------------------- Getters -------------------------- //
+// .oO0-------------------------------------------------------0Oo. //
+
 void testGetDiscipline (void) {
    // Tests that getDiscipline returns the correct discipline
 
@@ -197,6 +216,7 @@ void testGetDiscipline (void) {
    printf("Passed!\n");
 }
 
+
 void testGetDiceValue (void) {
    // Tests that getDiceValue returns the correct discipline
 
@@ -227,6 +247,7 @@ void testGetDiceValue (void) {
 
    printf("Passed!\n");
 }
+
 
 void testGetWhoseTurn (void) {
    // Test that 

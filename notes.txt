@@ -1,8 +1,20 @@
 Notes
 ===============
 
-/*
+/********************************************************************\
 NOTICES FOR THE GROUP:
+
+   NOTE FOR MATT:
+      PLEASE STOP SPAMMING COMMITS FOR NO REASON
+      YOU ALSO NEED TO FIND OUT HOW TO USE GIT
+      AND UNDERSTAND WHAT IS HAPPENING
+      AND THEN CONTRIBUTE TO THE TESTING FUNCTIONS
+
+   GOOD NEWS EVERYONE!
+      I ACTUALLY READ THE QUESTION, AND IT TURNS OUT THAT ALL WE HAVE
+      TO DO FOR THIS WEEK IS MAKE THE STRUCT AND MAKE A PROGRAM TO
+      TEST EACH OF THE FUNCTIONS IN THE .H
+      :D
 
    TO DO LIST:
       LISTEN ERP
@@ -19,7 +31,7 @@ NOTICES FOR THE GROUP:
             THIS APPLIES TO ALL FILES - NOT JUST CODE (THIS IS TO
             MAKE IT LOOK PRETTY)
       kthnxbye
-*/
+/********************************************************************\
 
 Nope:
 //Things To Do -
@@ -47,22 +59,13 @@ Plan:
    - Patents
    - Different types of student
    - Etc. -- TODO fill in
-- Vertex struct:
-   - Owner (in other words, is there a campus on it, if so who owns it)
-      - This would be a dumby value if noone owns it
-      - Need to work out how to represent the owner
-         - Pointer to struct?
-         - Name? - This one seems the best to meh
-         - idk... swag?
-         - In the .h file there is a way of describing the owner of a 
-           campus with numbers that I think we have to use.
-            - K let's do that
-   - Is GO8 (the campus)
-   - Etc. -- TODO fill in
 - Verticy struct:
+   - Owner
+   - Content type in .h
+- Edge struct:
    - Owner (in other words, is there a grant on it, if so who owns it)
-   - 
+   - Adjacent vertices
 - Region
    - Student producer
    - Dice number
-   - Etc. TODO fill in
+   - Adjacent vertices
