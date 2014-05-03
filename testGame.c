@@ -25,6 +25,7 @@ void testGetDiceValue (void);
 void testGetWhoseTurn (void);
 void testGetTurnNumber (void);
 void testGetMostARCs (void);
+void testGetMostPublications (void);
 
 int main(int argc, char *argv[]) {
 
@@ -388,6 +389,74 @@ void testGetMostARCs (void) {
    makeAction (g, addARC);
 
    assert (getMostARCs (g) == UNI_B);
+
+   // End of tests! (? anything else Hector/Matt ?)
+
+   disposeGame (g);
+
+   printf("Passed!\n");
+}
+
+void testGetMostPublications (void) {
+   // Test the get most publications function
+   // Will use the makeAction function to do so
+   // TODO (Hector/Matt) Check I haven't done anything 
+   // stupid in this function because I copy pasted it 
+   // from the previous one (I have checked)
+
+   printf("Testing getMostPublications\n");
+
+   // Create a new Game, values of stuff again isn't important
+
+   Game g;
+
+   int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+   int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
+
+   g = newGame (disciplines, dice);
+
+   // Assert that the player with the most publications
+   // starts off as no one
+
+   assert (getMostPublications (g) == NO_ONE);
+
+   // Advance the game from "Terra Nullis"
+
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   // Initialise an action that adds an ARC and one that passes
+
+   action obtainPublication;
+   obtainPublication.actionCode = OBTAIN_PUBLICATION;
+
+   action pass;
+   pass.actionCode = PASS;
+
+   // Add an ARC for player A (the player whose turn it currently is)
+   // in a set position
+
+   makeAction (g, obtainPublication);
+
+   assert (getMostPublications (g) == UNI_A);
+
+   // Advance the turn to UNI_B and give them an ARC
+   // Then assert that UNI_A still has the title
+
+   makeAction (g, pass);
+   makeAction (g, obtainPublication);
+
+   assert (getMostPublications (g) == UNI_A);
+
+   // Give UNI_B another ARC
+   // assert that now they have the title
+
+   makeAction (g, obtainPublication);
+
+   assert (getMostPublications (g) == UNI_B);
 
    // End of tests! (? anything else Hector/Matt ?)
 
