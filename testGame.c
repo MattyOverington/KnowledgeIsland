@@ -18,6 +18,9 @@
 #define ARBITRARILY_LARGE_NUMBER_TO_TEST_TURNS_UP_TO 1000
 #define TERRA_NULLIS -1
 #define NUM_INITIAL_CAMPUSES 2
+#define INITIAL_NUMBER_OF_GO8s 0
+#define INITIAL_NUMBER_OF_IP_PATENTS 0
+#define INITIAL_NUMBER_OF_PUBLICATIONS 0
 
 #define KPIPointsForCampus 10
 #define KPIPointsForGO8 20
@@ -869,8 +872,8 @@ void testGetKPIpoints (void) {
    makeAction (g, addGO8);
    uniCKPIs += KPIPointsForGO8;
    uniCKPIs -= KPIPointsForCampus;
-   assert (getKPIpoints );(g, UNI_C) == uniCKPIs);
-   makeAction (g, pass
+   assert (getKPIpoints (g, UNI_C) == uniCKPIs);
+   makeAction (g, pass);
 
    // Assert that adding ARCs affects KPIs accordingly for every Uni
    // Including prestige awards: getting and losing
@@ -954,18 +957,231 @@ void testGetARCs (void) {
 }
 
 
-void testGetGO8s (void) {
+void testGetCampuses (void) {
+   // Test the getCampuses function
 
+   printf("Testing getCampuses\n");
+
+   // Create a new Game, values of stuff again isn't important
+
+   Game g;
+
+   int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS, STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+   int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
+
+   g = newGame (disciplines, dice);
+
+   // Advance the game from "Terra Nullis"
+
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   // Initialise some actions
+
+   action getCampus;
+   getCampus.actionCode = BUILD_CAMPUS;
+
+   action pass;
+   pass.actionCode = PASS;
+
+   // Assert all Unis start off with two campuses
+
+   int numUniACampuses = NUM_INITIAL_CAMPUSES;
+   int numUniBCampuses = NUM_INITIAL_CAMPUSES;
+   int numUniCCampuses = NUM_INITIAL_CAMPUSES;
+
+   assert (getCampuses (g, UNI_A) == numUniACampuses);
+   assert (getCampuses (g, UNI_B) == numUniBCampuses);
+   assert (getCampuses (g, UNI_C) == numUniCCampuses);
+
+   // Assert adding campuses affects the 
+   // result of the function correctly
+
+   addCampus.destination = "R";
+   makeAction (g, addCampus);
+   numUniACampuses += 1;
+   assert (getCampus (g, UNI_A) == numUniACampuses);
+   makeAction (g, pass);
+
+   addCampus.destination = "L";
+   makeAction (g, addCampus);
+   numUniBCampuses += 1;
+   assert (getCampus (g, UNI_B) == numUniBCampuses);
+   makeAction (g, pass);
+
+   addCampus.destination = "LR";
+   makeAction (g, addCampus);
+   numUniCCampuses += 1;
+   assert (getCampus (g, UNI_C) == numUniCCampuses);
+   makeAction (g, pass);
+
+   // Assert changing a campus into a GO8 reduces the apparent
+   // number of campuses accordingly
+
+   addGO8.destination = "RLLLLL";
+   makeAction (g, addGO8);
+   numUniACampuses -= 1;
+   assert (getKPIpoints (g, UNI_A) == numUniACampuses);
+   makeAction (g, pass);
+
+   addGO8.destination = "RRLRL";
+   makeAction (g, addGO8);
+   numUniBCampuses -= 1;
+   assert (getKPIpoints (g, UNI_B) == numUniBCampuses);
+   makeAction (g, pass);
+
+   addGO8.destination = "LRLRL";
+   makeAction (g, addGO8);
+   numUniCCampuses -= 1;
+   assert (getKPIpoints (g, UNI_C) == numUniCCampuses);
+   makeAction (g, pass);
+
+   // End of tests!
+
+   disposeGame (g);
+
+   printf("Passed!\n");
 }
 
 
-void testGetCampuses (void) {
+void testGetGO8s (void) {
+   // Test the getGO8s function
 
+   printf("Testing getGO8s\n");
+
+   // Create a new Game, values of stuff again isn't important
+
+   Game g;
+
+   int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS, STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+   int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
+
+   g = newGame (disciplines, dice);
+
+   // Advance the game from "Terra Nullis"
+
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   // Initialise some actions
+
+   action addGO8;
+   addGO8.actionCode = BUILD_GO8;
+
+   action pass;
+   pass.actionCode = PASS;
+
+   // Assert all Unis start off with no GO8s
+
+   int numUniAGO8s = INITIAL_NUMBER_OF_GO8s;
+   int numUniBGO8s = INITIAL_NUMBER_OF_GO8s;
+   int numUniCGO8s = INITIAL_NUMBER_OF_GO8s;
+
+   assert (getGO8s (g, UNI_A) == numUniAGO8s);
+   assert (getGO8s (g, UNI_B) == numUniBGO8s);
+   assert (getGO8s (g, UNI_C) == numUniCGO8s);
+
+   // Assert transforming an initial campus into a GO8 changes the
+   // result of this function accordingly
+
+   addGO8.destination = "RLLLLL";
+   makeAction (g, addGO8);
+   numUniAGO8 += 1;
+   assert (getGO8s (g, UNI_A) == numUniAGO8);
+   makeAction (g, pass);
+
+   addGO8.destination = "RRLRL";
+   makeAction (g, addGO8);
+   numUniBGO8 += 1;
+   assert (getGO8s (g, UNI_B) == numUniBGO8);
+   makeAction (g, pass);
+
+   addGO8.destination = "LRLRL";
+   makeAction (g, addGO8);
+   numUniCGO8 += 1;
+   assert (getGO8s (g, UNI_C) == numUniCGO8);
+   makeAction (g, pass);
+
+   // End of tests!
+
+   disposeGame (g);
+
+   printf("Passed!\n");
 }
 
 
 void testGetIPs (void) {
+   // Test the getIPs function
 
+   printf("Testing getIPs\n");
+
+   // Create a new Game, values of stuff again isn't important
+
+   Game g;
+
+   int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS, STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+   int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
+
+   g = newGame (disciplines, dice);
+
+   // Advance the game from "Terra Nullis"
+
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   // Initialise some actions
+
+   action getGO8;
+   getGO8.actionCode = BUILD_GO8;
+
+   action pass;
+   pass.actionCode = PASS;
+
+   // Assert all Unis start off with no GO8s
+
+   int numUniAGO8s = INITIAL_NUMBER_OF_GO8s;
+   int numUniBGO8s = INITIAL_NUMBER_OF_GO8s;
+   int numUniCGO8s = INITIAL_NUMBER_OF_GO8s;
+
+   assert (getIPs (g, UNI_A) == numUniAGO8s);
+   assert (getIPs (g, UNI_B) == numUniBGO8s);
+   assert (getIPs (g, UNI_C) == numUniCGO8s);
+
+   // Assert transforming an initial campus into a GO8 changes the
+   // result of this function accordingly
+
+   addGO8.destination = "RLLLLL";
+   makeAction (g, addGO8);
+   numUniAGO8 += 1;
+   assert (getIPs (g, UNI_A) == numUniAGO8);
+   makeAction (g, pass);
+
+   addGO8.destination = "RRLRL";
+   makeAction (g, addGO8);
+   numUniBGO8 += 1;
+   assert (getIPs (g, UNI_B) == numUniBGO8);
+   makeAction (g, pass);
+
+   addGO8.destination = "LRLRL";
+   makeAction (g, addGO8);
+   numUniCGO8 += 1;
+   assert (getIPs (g, UNI_C) == numUniCGO8);
+   makeAction (g, pass);
+
+   // End of tests!
+
+   disposeGame (g);
+
+   printf("Passed!\n");
 }
 
 
