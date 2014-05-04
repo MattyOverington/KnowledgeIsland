@@ -6,9 +6,8 @@
 //
 
 
-#define NUM_VERTICES
-#define NUM_EDGES
-#define NUM_REGIONS
+#define NUM_VERTICES 54
+#define NUM_EDGES 72
 
 #define EDGES_PER_VERTEX 3
 #define REGIONS_PER_VERTEX 3
@@ -26,21 +25,29 @@ typedef struct _game {
 
    // Players
    player players[NUM_PLAYERS];
+
+   // Other useful things to store
+   int turnNumber;
+   int whoseTurn
+   int playerWithMostARCs;
+   int playerWithMostPublications;
 } game;
 
 typedef struct _vertex {
    // Adjacent things
-   edge adjacentEdges[EDGES_PER_VERTEX];
-   region adjacentRegions[REGIONS_PER_VERTEX];
+   edge *adjacentEdges[EDGES_PER_VERTEX]; // Wez changed this to a list
+                                          // of pointers to edges, 
+                                          // likewise regions and in 
+                                          // other structs
+   region *adjacentRegions[REGIONS_PER_VERTEX];
 
    // Vertex attributes
-   int owner;
    int vertexContent;
 } vertex;
 
 typedef struct _edge {
    // Adjacent things
-   vertex adjacentVertices[VERTICES_PER_EDGE];
+   vertex *adjacentVertices[VERTICES_PER_EDGE];
 
    // Edge attributes
    int edgeContent;
@@ -48,7 +55,7 @@ typedef struct _edge {
 
 typedef struct _region {
    // Adjacent things
-   vertex adjacentVertices[VERTICES_PER_REGION];
+   vertex *adjacentVertices[VERTICES_PER_REGION];
 
    // Region attributes
    int studentType;
@@ -57,17 +64,15 @@ typedef struct _region {
 
 typedef struct _player {
    // Player ID (relates to the #defines in the .h)
-   int playerID;
+   int playerID; // isn't this just the index in the list of players
 
    // Player possessions
    int KPIs;
    int patents;
    int papers;
-   int regularCampuses; // Is there any point in having these if each
-   int GO8campuses;     // individual vertex and edge will be storing
-   int ARCs;            // it's owner and if it is a GO8?
-   // It could make a few functions faster and
-   // easier.
+   int regularCampuses;
+   int GO8campuses;
+   int ARCs;
 
    // Different types of student
    int THDs;
@@ -77,3 +82,8 @@ typedef struct _player {
    int MTVs;
    int MMONEYs;
 } player;
+
+
+
+
+

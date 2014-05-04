@@ -12,12 +12,15 @@
 #include "Game.h"
 
 
-#define UNIMPORTANT_DICE_VALUE_FOR_TESTING 7 // wtf
+#define UNIMPORTANT_DICE_VALUE_FOR_TESTING 7
 #define MIN_DICE_VALUE 2
 #define MAX_DICE_VALUE 12
-#define TURN_TESTING_ITERATIONS 1000 //ARBITRARILY_LARGE_NUMBER_TO_TEST_TURNS_UP_TO 1000;
+#define ARBITRARILY_LARGE_NUMBER_TO_TEST_TURNS_UP_TO 1000
 #define TERRA_NULLIS -1
 #define NUM_INITIAL_CAMPUSES 2
+#define INITIAL_NUMBER_OF_GO8s 0
+#define INITIAL_NUMBER_OF_IP_PATENTS 0
+#define INITIAL_NUMBER_OF_PUBLICATIONS 0
 
 #define KPIPointsForCampus 10
 #define KPIPointsForGO8 20
@@ -89,10 +92,10 @@ void testNewGame (void) {
    // to parse into the function
 
    int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
-             STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
-             STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
-             STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
-             STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
    int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
 
    g = newGame (disciplines, dice);
@@ -114,10 +117,10 @@ void testThrowDice (void) {
    Game g;
 
    int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
-             STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
-             STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
-             STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
-             STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
    int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
 
    g = newGame (disciplines, dice);
@@ -128,7 +131,7 @@ void testThrowDice (void) {
    diceScore = MIN_DICE_VALUE;
 
    while (diceScore <= MAX_DICE_VALUE) {
-    throwDice (g, diceScore);
+      throwDice (g, diceScore);
    }
 
    printf("Passed!\n");
@@ -146,10 +149,10 @@ void testMakeAction (void) {
    Game g;
 
    int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
-             STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
-             STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
-             STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
-             STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
    int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
 
    g = newGame (disciplines, dice);
@@ -223,10 +226,10 @@ void testGetDiscipline (void) {
    Game g;
 
    int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
-             STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
-             STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
-             STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
-             STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
    int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
 
    g = newGame (disciplines, dice);
@@ -237,8 +240,8 @@ void testGetDiscipline (void) {
    // the correct discipline value
 
    while (regionID < NUM_REGIONS) {
-    assert (getDiscipline (g, regionID) == disciplines [regionID]);
-    regionID ++;
+      assert (getDiscipline (g, regionID) == disciplines [regionID]);
+      regionID ++;
    }
 
    disposeGame (g);
@@ -257,10 +260,10 @@ void testGetDiceValue (void) {
    Game g;
 
    int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
-             STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
-             STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
-             STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
-             STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
    int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
 
    g = newGame (disciplines, dice);
@@ -271,8 +274,8 @@ void testGetDiceValue (void) {
    int regionID = 0;
 
    while (regionID < NUM_REGIONS) {
-    assert (getDiceValue (g, regionID) == dice [regionID]);
-    regionID ++;
+      assert (getDiceValue (g, regionID) == dice [regionID]);
+      regionID ++;
    }
 
    disposeGame (g);
@@ -292,10 +295,10 @@ void testGetWhoseTurn (void) {
    Game g;
 
    int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
-             STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
-             STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
-             STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
-             STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
    int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
 
    g = newGame (disciplines, dice);
@@ -341,10 +344,10 @@ void testGetTurnNumber (void) {
    Game g;
 
    int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
-             STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
-             STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
-             STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
-             STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
    int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
 
    g = newGame (disciplines, dice);
@@ -358,15 +361,15 @@ void testGetTurnNumber (void) {
 
    int turnNumber = TERRA_NULLIS;
 
-   while (turnNumber <= TURN_TESTING_ITERATIONS) {
-    assert (getTurnNumber (g) == turnNumber);
+   while (turnNumber <= ARBITRARILY_LARGE_NUMBER_TO_TEST_TURNS_UP_TO) {
+      assert (getTurnNumber (g) == turnNumber);
 
-    // Make three turns, one for each player
-    makeAction (g, pass);
-    makeAction (g, pass);
-    makeAction (g, pass);
+      // Make three turns, one for each player
+      makeAction (g, pass);
+      makeAction (g, pass);
+      makeAction (g, pass);
 
-    turnNumber ++;
+      turnNumber ++;
    }
 
    printf("Passed!\n");
@@ -384,10 +387,10 @@ void testGetMostARCs (void) {
    Game g;
 
    int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
-             STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
-             STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
-             STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
-             STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
    int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
 
    g = newGame (disciplines, dice);
@@ -454,10 +457,10 @@ void testGetMostPublications (void) {
    Game g;
 
    int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
-             STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
-             STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
-             STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
-             STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
    int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
 
    g = newGame (disciplines, dice);
@@ -465,7 +468,7 @@ void testGetMostPublications (void) {
    // Assert that the player with the most publications
    // starts off as no one
 
-   assert (getMostPublications(g) == NO_ONE);
+   assert (getMostPublications (g) == NO_ONE);
 
    // Advance the game from "Terra Nullis"
 
@@ -515,9 +518,7 @@ void testGetMostPublications (void) {
 }
 
 
-void testGetCampus(void) {
-   printf("Testing _...\n");
-
+void testGetCampus (void) {
    // Test that adding a campus affects the result of getCampus
    // accordingly
 
@@ -785,14 +786,86 @@ void testGetCampus(void) {
 }
 
 
-void testGetARC(void) {
-   printf("Testing getARC...\n");
+void testGetARC (void) {
+   // Test that adding a campus affects the result of getARC
+   // accordingly
+
+   printf("Testing getARC\n");
+
+   // Create a new Game, values of stuff again isn't important
+
+   Game g;
+
+   int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+   int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
+
+   g = newGame (disciplines, dice);
+
+   // Advance the game from "Terra Nullis"
+
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   // Initialise some actions
+
+   action addARC;
+   addARC.actionCode = OBTAIN_ARC;
+
+   action pass;
+   pass.actionCode = PASS;
+
+   // TODO (if I can be bothered):
+   //    Check whether vacant ARCs are all vacant
+
+   // Assert that adding ARCs works with (and without) 
+   // convoluted paths
+
+   pathToVertex = "RL";
+   addARC.destination = pathToVertex;
+   makeAction (g, addARC);
+   assert (getARC (g, pathToVertex) == ARC_A);
+
+   pathToVertex = "LR";
+   addARC.destination = pathToVertex;
+   makeAction (g, addARC);
+   assert (getARC (g, pathToVertex) == ARC_A);
+
+   makeAction (g, pass);
+
+   pathToVertex = "RLLLLLLLRL";
+   addARC.destination = pathToVertex;
+   makeAction (g, addARC);
+   assert (getARC (g, pathToVertex) == ARC_B);
+
+   pathToVertex = "RLRLLLLLLLLLBLR";
+   addARC.destination = pathToVertex;
+   makeAction (g, addARC);
+   assert (getARC (g, pathToVertex) == ARC_B);
+
+   makeAction (g, pass);
+
+   pathToVertex = "LRLRRLBL";
+   addARC.destination = pathToVertex;
+   makeAction (g, addARC);
+   assert (getARC (g, pathToVertex) == ARC_C);
+
+   pathToVertex = "LRRLRL";
+   addARC.destination = pathToVertex;
+   makeAction (g, addARC);
+   assert (getARC (g, pathToVertex) == ARC_C);
+
+   // End of tests
+
+   disposeGame (g);
 
    printf("Passed!\n");
 }
 
 
-void testIsLegalAction(void) {
+void testIsLegalAction (void) {
    printf("Testing isLegalAction...\n");
 
    // --------------------------------------------
@@ -1119,8 +1192,8 @@ void testGetKPIpoints (void) {
    makeAction (g, addGO8);
    uniCKPIs += KPIPointsForGO8;
    uniCKPIs -= KPIPointsForCampus;
-   assert (getKPIpoints );(g, UNI_C) == uniCKPIs);
-   makeAction (g, pass
+   assert (getKPIpoints (g, UNI_C) == uniCKPIs);
+   makeAction (g, pass);
 
    // Assert that adding ARCs affects KPIs accordingly for every Uni
    // Including prestige awards: getting and losing
@@ -1199,7 +1272,7 @@ void testGetKPIpoints (void) {
 }
 
 
-void testGetARCs(void) {
+void testGetARCs (void) {
    printf("Testing getARCs...\n");
 
    // Create a new Game, values of stuff again isn't important
@@ -1264,45 +1337,304 @@ void testGetARCs(void) {
 }
 
 
-void testGetGO8s(void) {
-   printf("Testing getGO8s...\n");
+void testGetCampuses (void) {
+   // Test the getCampuses function
+
+   printf("Testing getCampuses\n");
+
+   // Create a new Game, values of stuff again isn't important
+
+   Game g;
+
+   int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS, STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+   int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
+
+   g = newGame (disciplines, dice);
+
+   // Advance the game from "Terra Nullis"
+
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   // Initialise some actions
+
+   action getCampus;
+   getCampus.actionCode = BUILD_CAMPUS;
+
+   action pass;
+   pass.actionCode = PASS;
+
+   // Assert all Unis start off with two campuses
+
+   int numUniACampuses = NUM_INITIAL_CAMPUSES;
+   int numUniBCampuses = NUM_INITIAL_CAMPUSES;
+   int numUniCCampuses = NUM_INITIAL_CAMPUSES;
+
+   assert (getCampuses (g, UNI_A) == numUniACampuses);
+   assert (getCampuses (g, UNI_B) == numUniBCampuses);
+   assert (getCampuses (g, UNI_C) == numUniCCampuses);
+
+   // Assert adding campuses affects the 
+   // result of the function correctly
+
+   addCampus.destination = "R";
+   makeAction (g, addCampus);
+   numUniACampuses += 1;
+   assert (getCampus (g, UNI_A) == numUniACampuses);
+   makeAction (g, pass);
+
+   addCampus.destination = "L";
+   makeAction (g, addCampus);
+   numUniBCampuses += 1;
+   assert (getCampus (g, UNI_B) == numUniBCampuses);
+   makeAction (g, pass);
+
+   addCampus.destination = "LR";
+   makeAction (g, addCampus);
+   numUniCCampuses += 1;
+   assert (getCampus (g, UNI_C) == numUniCCampuses);
+   makeAction (g, pass);
+
+   // Assert changing a campus into a GO8 reduces the apparent
+   // number of campuses accordingly
+
+   addGO8.destination = "RLLLLL";
+   makeAction (g, addGO8);
+   numUniACampuses -= 1;
+   assert (getKPIpoints (g, UNI_A) == numUniACampuses);
+   makeAction (g, pass);
+
+   addGO8.destination = "RRLRL";
+   makeAction (g, addGO8);
+   numUniBCampuses -= 1;
+   assert (getKPIpoints (g, UNI_B) == numUniBCampuses);
+   makeAction (g, pass);
+
+   addGO8.destination = "LRLRL";
+   makeAction (g, addGO8);
+   numUniCCampuses -= 1;
+   assert (getKPIpoints (g, UNI_C) == numUniCCampuses);
+   makeAction (g, pass);
+
+   // End of tests!
+
+   disposeGame (g);
 
    printf("Passed!\n");
 }
 
 
-void testGetCampuses(void) {
-   printf("Testing getCampuses...\n");
+void testGetGO8s (void) {
+   // Test the getGO8s function
+
+   printf("Testing getGO8s\n");
+
+   // Create a new Game, values of stuff again isn't important
+
+   Game g;
+
+   int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS, STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+   int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
+
+   g = newGame (disciplines, dice);
+
+   // Advance the game from "Terra Nullis"
+
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   // Initialise some actions
+
+   action addGO8;
+   addGO8.actionCode = BUILD_GO8;
+
+   action pass;
+   pass.actionCode = PASS;
+
+   // Assert all Unis start off with no GO8s
+
+   int numUniAGO8s = INITIAL_NUMBER_OF_GO8s;
+   int numUniBGO8s = INITIAL_NUMBER_OF_GO8s;
+   int numUniCGO8s = INITIAL_NUMBER_OF_GO8s;
+
+   assert (getGO8s (g, UNI_A) == numUniAGO8s);
+   assert (getGO8s (g, UNI_B) == numUniBGO8s);
+   assert (getGO8s (g, UNI_C) == numUniCGO8s);
+
+   // Assert transforming an initial campus into a GO8 changes the
+   // result of this function accordingly
+
+   addGO8.destination = "RLLLLL";
+   makeAction (g, addGO8);
+   numUniAGO8 += 1;
+   assert (getGO8s (g, UNI_A) == numUniAGO8);
+   makeAction (g, pass);
+
+   addGO8.destination = "RRLRL";
+   makeAction (g, addGO8);
+   numUniBGO8 += 1;
+   assert (getGO8s (g, UNI_B) == numUniBGO8);
+   makeAction (g, pass);
+
+   addGO8.destination = "LRLRL";
+   makeAction (g, addGO8);
+   numUniCGO8 += 1;
+   assert (getGO8s (g, UNI_C) == numUniCGO8);
+   makeAction (g, pass);
+
+   // End of tests!
+
+   disposeGame (g);
 
    printf("Passed!\n");
 }
 
 
-void testGetIPs(void) {
-   printf("Testing getIPs...\n");
+void testGetIPs (void) {
+   // Test the getIPs function
+
+   printf("Testing getIPs\n");
+
+   // Create a new Game, values of stuff again isn't important
+
+   Game g;
+
+   int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS, STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+   int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
+
+   g = newGame (disciplines, dice);
+
+   // Advance the game from "Terra Nullis"
+
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   // Initialise some actions
+
+   action obtainIPPatent;
+   obtainIPPatent.actionCode = OBTAIN_IP_PATENT;
+
+   action pass;
+   pass.actionCode = PASS;
+
+   // Assert all Unis start off with no IPs
+
+   int numUniAIPs = INITIAL_NUMBER_OF_IP_PATENTS;
+   int numUniBIPs = INITIAL_NUMBER_OF_IP_PATENTS;
+   int numUniCIPs = INITIAL_NUMBER_OF_IP_PATENTS;
+
+   assert (getIPs (g, UNI_A) == numUniAIPs);
+   assert (getIPs (g, UNI_B) == numUniBIPs);
+   assert (getIPs (g, UNI_C) == numUniCIPs);
+
+   // Assert obtaining an IP affects the result of the function
+   // accordingly
+
+   makeAction (g, obtainIPPatent);
+   numUniAIPs += 1;
+   assert (getIPs (g, UNI_A) == numUniAIPs);
+   makeAction (g, pass);
+
+   makeAction (g, obtainIPPatent);
+   numUniBIPs += 1;
+   assert (getIPs (g, UNI_B) == numUniBIPs);
+   makeAction (g, pass);
+
+   makeAction (g, obtainIPPatent);
+   numUniCIPs += 1;
+   assert (getIPs (g, UNI_C) == numUniCIPs);
+   makeAction (g, pass);
+
+   // End of tests!
+
+   disposeGame (g);
 
    printf("Passed!\n");
 }
 
 
-void testGetPublications(void) {
-   printf("Testing getPublications...\n");
+void testGetPublications (void) {
+   // Test the getPublications function
+
+   printf("Testing getPublications\n");
+
+   // Create a new Game, values of stuff again isn't important
+
+   Game g;
+
+   int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS, STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+   int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
+
+   g = newGame (disciplines, dice);
+
+   // Advance the game from "Terra Nullis"
+
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   // Initialise some actions
+
+   action obtainPublication;
+   obtainPublication.actionCode = OBTAIN_PUBLICATION;
+
+   action pass;
+   pass.actionCode = PASS;
+
+   // Assert all Unis start off with no Publications
+
+   int numUniAPublications = INITIAL_NUMBER_OF_PUBLICATIONS;
+   int numUniBPublications = INITIAL_NUMBER_OF_PUBLICATIONS;
+   int numUniCPublications = INITIAL_NUMBER_OF_PUBLICATIONS;
+
+   assert (getPublications (g, UNI_A) == numUniAPublications);
+   assert (getPublications (g, UNI_B) == numUniBPublications);
+   assert (getPublications (g, UNI_C) == numUniCPublications);
+
+   // Assert obtaining a publication affects the result of the function
+   // accordingly
+
+   makeAction (g, obtainPublication);
+   numUniAPublications += 1;
+   assert (getPublications (g, UNI_A) == numUniAPublications);
+   makeAction (g, pass);
+
+   makeAction (g, obtainPublication);
+   numUniBPublications += 1;
+   assert (getPublications (g, UNI_B) == numUniBPublications);
+   makeAction (g, pass);
+
+   makeAction (g, obtainPublication);
+   numUniCPublications += 1;
+   assert (getPublications (g, UNI_C) == numUniCPublications);
+   makeAction (g, pass);
+
+   // End of tests!
+
+   disposeGame (g);
 
    printf("Passed!\n");
 }
 
 
-void testGetStudents(void) {
-   printf("Testing getStudents...\n");
+void testGetStudents (void) {
 
-   printf("Passed!\n");
 }
 
 
-void testGetExchangeRate(void) {
-   printf("Testing getExchangeRate...\n");
+void testGetExchangeRate (void) {
 
-   printf("Passed!\n");
 }
 
 
