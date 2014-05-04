@@ -1140,41 +1140,38 @@ void testGetIPs (void) {
 
    // Initialise some actions
 
-   action getGO8;
-   getGO8.actionCode = BUILD_GO8;
+   action obtainIPPatent;
+   obtainIPPatent.actionCode = OBTAIN_IP_PATENT;
 
    action pass;
    pass.actionCode = PASS;
 
    // Assert all Unis start off with no GO8s
 
-   int numUniAGO8s = INITIAL_NUMBER_OF_GO8s;
-   int numUniBGO8s = INITIAL_NUMBER_OF_GO8s;
-   int numUniCGO8s = INITIAL_NUMBER_OF_GO8s;
+   int numUniAIPs = INITIAL_NUMBER_OF_IP_PATENTS;
+   int numUniBIPs = INITIAL_NUMBER_OF_IP_PATENTS;
+   int numUniCIPs = INITIAL_NUMBER_OF_IP_PATENTS;
 
-   assert (getIPs (g, UNI_A) == numUniAGO8s);
-   assert (getIPs (g, UNI_B) == numUniBGO8s);
-   assert (getIPs (g, UNI_C) == numUniCGO8s);
+   assert (getIPs (g, UNI_A) == numUniAIPs);
+   assert (getIPs (g, UNI_B) == numUniBIPs);
+   assert (getIPs (g, UNI_C) == numUniCIPs);
 
-   // Assert transforming an initial campus into a GO8 changes the
-   // result of this function accordingly
+   // Assert obtaining an IP affects the result of the function
+   // accordingly
 
-   addGO8.destination = "RLLLLL";
-   makeAction (g, addGO8);
-   numUniAGO8 += 1;
-   assert (getIPs (g, UNI_A) == numUniAGO8);
+   makeAction (g, obtainIPPatent);
+   numUniAIPs += 1;
+   assert (getIPs (g, UNI_A) == numUniAIPs);
    makeAction (g, pass);
 
-   addGO8.destination = "RRLRL";
-   makeAction (g, addGO8);
-   numUniBGO8 += 1;
-   assert (getIPs (g, UNI_B) == numUniBGO8);
+   makeAction (g, obtainIPPatent);
+   numUniBIPs += 1;
+   assert (getIPs (g, UNI_B) == numUniBIPs);
    makeAction (g, pass);
 
-   addGO8.destination = "LRLRL";
-   makeAction (g, addGO8);
-   numUniCGO8 += 1;
-   assert (getIPs (g, UNI_C) == numUniCGO8);
+   makeAction (g, obtainIPPatent);
+   numUniCIPs += 1;
+   assert (getIPs (g, UNI_C) == numUniCIPs);
    makeAction (g, pass);
 
    // End of tests!
