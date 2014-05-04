@@ -578,137 +578,157 @@ void testGetCampus(void) {
 
    // Assert that empty vertexes are as they should be
 
-   pathToVertex = "R";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   char *paths[] = {"R", "RR", "RRL", "RRLR", "L", "LR", "LRR", "LRRR", 
+                    "LRRRL", "LRRRLR", "LRRRLRL", "LRRRLRLR", 
+                    "LRRRLRLRL", "LRL", "LRLR", "LRLRR", "LRLRRR", 
+                    "LRLRRRL", "LRLRRRLR", "LRLRRRLRL", "LRLRRRLRLR", 
+                    "LRLRRRLRLRL", "LRLRRRLRLRLR", "LRLRRRLRLRLRL", 
+                    "LRLRLR", "LRLRLRR", "LRLRLRRR", "LRLRLRRRL", 
+                    "LRLRLRRRLR", "LRLRLRRRLRL", "LRLRLRRRLRLR", 
+                    "LRLRLRRRLRLRL", "LRLRLRRRLRLRLR", 
+                    "LRLRLRRRLRLRLRL", "LRLRLRRRLRLRLRLL", "LRLRLRRL",
+                    "LRLRLRRLR", "LRLRLRRLRL", "LRLRLRRLRLR", 
+                    "LRLRLRRLRLRL", "LRLRLRRLRLRLR", "LRLRLRRLRLRLRL",
+                    "LRLRLRRLRLRLRLR", "LRLRLRRLRLRLRLRL", "", "", "", ""};
 
-   pathToVertex = "RR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   int i = 0;
+   while(i < 48) {
+      pathToVertex = paths[i];
+      assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+      i++;
+   }
 
-   pathToVertex = "RRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "R";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "RRLR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "RR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "L";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "RRL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "RRLR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "L";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRRR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRRRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRRRLR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRRR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRRRLRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRRRL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRRRLRLR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRRRLR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRRRLRLRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRRRLRL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRRRLRLR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRRRLRLRL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRRR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRRRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRRRLR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRRR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRRRLRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRRRL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRRRLRLR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRRRLR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRRRLRLRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRRRLRL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRRRLRLRLR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRRRLRLR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRRRLRLRLRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRRRLRLRL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRRRLRLRLR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRRRLRLRLRL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRRR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRLR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRRRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRLRR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRRRLR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRLRRR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRRRLRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRLRRRL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRRRLRLR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRLRRRLR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRRRLRLRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRLRRRLRL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRRRLRLRLR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRLRRRLRLR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRRRLRLRLRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRLRRRLRLRL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRRRLRLRLRLL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRLRRRLRLRLR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRLRRRLRLRLRL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRRLR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRLRRRLRLRLRLL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRRLRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRLRRL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRRLRLR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRLRRLR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRRLRLRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRLRRLRL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRRLRLRLR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRLRRLRLR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRRLRLRLRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRLRRLRLRL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRRLRLRLRLR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRLRRLRLRLR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
-   pathToVertex = "LRLRLRRLRLRLRLRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+   // pathToVertex = "LRLRLRRLRLRLRL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   // pathToVertex = "LRLRLRRLRLRLRLR";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   // pathToVertex = "LRLRLRRLRLRLRLRL";
+   // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
    pathToVertex = "LRLRLRRLRLR";
    assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
@@ -775,15 +795,46 @@ void testGetARC(void) {
 void testIsLegalAction(void) {
    printf("Testing isLegalAction...\n");
 
-   // Valid action codes:
-   // PASS
-   // BUILD_CAMPUS
-   // BUILD_GO8
-   // OBTAIN_ARC
-   // START_SPINOFF
-   // OBTAIN_PUBLICATION
-   // OBTAIN_IP_PATENT
-   // RETRAIN_STUDENTS
+   // --------------------------------------------
+   // Init
+   // --------------------------------------------
+
+   Game g;
+
+   int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+   int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
+
+   g = newGame (disciplines, dice);
+
+   // Advance the game from "Terra Nullis" (it is now UNI_A's turn)
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   // Initialising some actions
+   action buildCampus;
+   buildCampus.actionCode = BUILD_CAMPUS;
+
+   action buildGO8;
+   buildGO8.actionCode = BUILD_GO8;
+
+   action obtainArc;
+   obtainArc.actionCode = OBTAIN_ARC;
+
+   action obtainIPPatent;
+   obtainIPPatent.actionCode = OBTAIN_IP_PATENT;
+
+   action obtainPublication;
+   obtainPublication.actionCode = OBTAIN_PUBLICATION;
+
+   action pass;
+   pass.actionCode = PASS;
+
+   // --------------------------------------------
+   // Planning bits
+   // --------------------------------------------
 
    // Criteria for an action to be valid:
    // - It isn't currently Tera Nulius
@@ -792,43 +843,189 @@ void testIsLegalAction(void) {
    //    - The path does not lead off the island
    //    - It is of legal length
    //    - It has only legal direction characters in it
-   // PASS
+
+   // --------------------------------------------
+   // Testing lack in resources to buy things
+   // --------------------------------------------
+
+   // - Doesn't have the students to pay for campus
    
 
-   // BUILD_CAMPUS
-   //  - The vertex is vacant
-   //  - The path is correct
-   //  - Is the vertex adjacent to one of the player's ARCs
-   //  - Does the university have the correct students to pay
+   // - Doesn't have the students to pay for GO8
 
 
-   // BUILD_GO8
-   //  - There is already a campuss here
-   //  - Has the students to pay
-   //  - There are less than 8 GO8s
+   // - Has the right amount of students to start a spinoff
+
+
+   // - The university has the sufficient students to retrain people
+
+
+   // -----------------------------------------------------
+   // Iterating over turns to give players enough resources
+   // -----------------------------------------------------
+
+   int i = 0;
+   while(i < TURN_TESTING_ITERATIONS) {
+      makeAction(pass);
+      throwDice(g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+      i++;
+   }
+
+   // --------------------------------------------
+   // Testing PASS
+   // --------------------------------------------
+
+   // Legals (passing is always legal)
+   assert(isLegalAction(g, pass) == TRUE);
+
+   // --------------------------------------------
+   // Testing BUILD_CAMPUS
+   // --------------------------------------------
+
+   // Legals
+   buildCampus.destination = "L";
+   assert(isLegalAction(g, buildCampus) == TRUE);
+
+   // Illegals
+
+   // - The vertex isn't vacant
+
+   // Making a campus to the left
+   obtainArc.destination = "L";
+   makeAction(g, obtainArc);
+   buildCampus.destination = "L";
+   makeAction(g, buildCampus);
+   // Testing that trying to build in the same place is not allowed
+   assert(isLegalAction(g, buildCampus) == FALSE);
+
+   // - The path is incorrect
+
+   //    - The path does not lead off the island
+   buildCampus.destination = "BBBBBB";
+   assert(isLegalAction(g, buildCampus) == FALSE);
+
+   //    - It is of legal length
+   buildCampus.destination = "RLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+                              LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+                              LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+                              LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL";
+   assert(isLegalAction(g, buildCampus) == FALSE);
+
+   //    - It has only legal direction characters in it
+   buildCampus.destination = "XXXXXXXXXXX";
+   assert(isLegalAction(g, buildCampus) == FALSE);
+
+   // - The vertex isn't adjacent to one of the player's ARCs
+
+   buildCampus.destination = "LRLRLRL";
+   assert(isLegalAction(g, buildCampus) == FALSE);
+
+
+   // --------------------------------------------
+   // Testing BUILD_GO8
+   // --------------------------------------------
+
+   // Legals
+
+   buildGO8.destination = "L";
+   assert(isLegalAction(g, buildGO8) == TRUE);
+
+   // Illegals
+
+   // - There is no campus there
+
+   obtainArc.destination = "R";
+   makeAction(g, obtainArc);
+   buildGO8.destination = "R";
+   assert(isLegalAction(g, buildGO8) == FALSE);
+
+   // - There are more than 7 GO8s
+
+   // Making seven (more) GO8s
+   char *GO8Paths[] = {"LR", "LRL", "LRLR", "LRLRL", 
+                       "LRLRLR", "LRLRLRL", "LRLRLRLR", "LRLRLRLRL"};
+   int i = 0;
+   while(i < 7) {
+      obtainArc.destination = GO8Paths[i];
+      buildCampus.destination = GO8Paths[i];
+      buildGO8.destination = GO8Paths[i];
+      makeAction(g, obtainArc);
+      makeAction(g, buildCampus);
+      makeAction(g, buildGO8);
+      i++;
+   }
+
+   // Trying to make a ninth GO8
+   obtainArc.destination = GO8Paths[7];
+   buildCampus.destination = GO8Paths[7];
+   buildGO8.destination = GO8Paths[7];
+   makeAction(g, obtainArc);
+   makeAction(g, buildCampus);
+   makeAction(g, buildGO8);
+
+   // --------------------------------------------
    // OBTAIN_ARC
-   //  - The edge is vacant
-   //  - The path is correct
-   //  - It is adjacent to a vertex which is adjacent to another
-   //    edge owned by the same person
+   // --------------------------------------------
+
+   // Legals
+
+
+   // Illegals
+   // - The edge is vacant
+
+
+   // - The path is correct
+
+
+   // - It is adjacent to a vertex which is adjacent to another
+   //   edge owned by the same person
+
+
+   // --------------------------------------------
    // START_SPINOFF
-   //  - Has the right amount of students
-   //  - Has the right type of students
+   // --------------------------------------------
+
+   // Legals
+
+
+
+   // --------------------------------------------
    // OBTAIN_PUBLICATION
+   // --------------------------------------------
+
+   // Legals
+   // ?whatdo?
+
+   // Illegals
+   // ?whatdo?
+
+   // --------------------------------------------
    // OBTAIN_IP_PATENT
+   // --------------------------------------------
+
+   // Legals
+   // ?whatdo?
+
+   // Illegals
+   // ?whatdo?
+
+   // --------------------------------------------
    // RETRAIN_STUDENTS
-   //  - There are only legal discipline numbers
-   //     - 0, 1, 2, 3, 4, 5
-   //  - The university has the sufficient amount and type of
-   //    students to retrain these people
+   // --------------------------------------------
+
+   // Legals
+   
+
+   // Illegals
+   // - There are only legal discipline numbers (0, 1, 2, 3, 4, 5)
+
+
 
    printf("Passed!\n");
 }
 
 
 void testGetKPIpoints (void) {
-   // Test the getKPIpoints function
-
    printf("Testing getKPIpoints\n");
 
    // Create a new Game, values of stuff again isn't important
@@ -997,7 +1194,7 @@ void testGetKPIpoints (void) {
    // End of these tests!
 
    disposeGame (g);
-   
+
    printf("Passed!\n");
 }
 
