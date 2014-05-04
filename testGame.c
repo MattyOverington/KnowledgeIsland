@@ -1329,7 +1329,7 @@ void testGetIPs (void) {
    action pass;
    pass.actionCode = PASS;
 
-   // Assert all Unis start off with no GO8s
+   // Assert all Unis start off with no IPs
 
    int numUniAIPs = INITIAL_NUMBER_OF_IP_PATENTS;
    int numUniBIPs = INITIAL_NUMBER_OF_IP_PATENTS;
@@ -1366,7 +1366,68 @@ void testGetIPs (void) {
 
 
 void testGetPublications (void) {
+   // Test the getPublications function
 
+   printf("Testing getPublications\n");
+
+   // Create a new Game, values of stuff again isn't important
+
+   Game g;
+
+   int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS, STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+   int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
+
+   g = newGame (disciplines, dice);
+
+   // Advance the game from "Terra Nullis"
+
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   // Initialise some actions
+
+   action obtainPublication;
+   obtainPublication.actionCode = OBTAIN_PUBLICATION;
+
+   action pass;
+   pass.actionCode = PASS;
+
+   // Assert all Unis start off with no Publications
+
+   int numUniAPublications = INITIAL_NUMBER_OF_PUBLICATIONS;
+   int numUniBPublications = INITIAL_NUMBER_OF_PUBLICATIONS;
+   int numUniCPublications = INITIAL_NUMBER_OF_PUBLICATIONS;
+
+   assert (getPublications (g, UNI_A) == numUniAPublications);
+   assert (getPublications (g, UNI_B) == numUniBPublications);
+   assert (getPublications (g, UNI_C) == numUniCPublications);
+
+   // Assert obtaining a publication affects the result of the function
+   // accordingly
+
+   makeAction (g, obtainPublication);
+   numUniAPublications += 1;
+   assert (getPublications (g, UNI_A) == numUniAPublications);
+   makeAction (g, pass);
+
+   makeAction (g, obtainPublication);
+   numUniBPublications += 1;
+   assert (getPublications (g, UNI_B) == numUniBPublications);
+   makeAction (g, pass);
+
+   makeAction (g, obtainPublication);
+   numUniCPublications += 1;
+   assert (getPublications (g, UNI_C) == numUniCPublications);
+   makeAction (g, pass);
+
+   // End of tests!
+
+   disposeGame (g);
+
+   printf("Passed!\n");
 }
 
 
