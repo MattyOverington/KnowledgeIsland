@@ -22,12 +22,12 @@
 #define INITIAL_NUMBER_OF_IP_PATENTS 0
 #define INITIAL_NUMBER_OF_PUBLICATIONS 0
 
-#define KPIPointsForCampus 10
-#define KPIPointsForGO8 20
-#define KPIPointsForARC 2
-#define KPIPointsForPatentIP 10
-#define KPIPointsForMostARCs 10
-#define KPIPointsForMostPublications 10
+#define KPI_POINTS_FOR_CAMPUS 10
+#define KPI_POINTS_FOR_GO8 20
+#define KPI_POINTS_FOR_ARC 2
+#define KPI_POINTS_FOR_IP 10
+#define KPI_POINTS_FOR_MOST_ARCS 10
+#define KPI_POINTS_FOR_MOST_PUBLICATIONS 10
 
 
 // Setters
@@ -593,7 +593,7 @@ void testGetCampus (void) {
                     "LRLRLRRLRLRRLRLR"};
 
    int i = 0;
-   while(i < 48) {
+   while(i < ) {
       pathToVertex = paths[i];
       assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
       i++;
@@ -1068,9 +1068,9 @@ void testGetKPIpoints (void) {
    // The only KPI points Unis start with are the ones for
    // their two initial ordinary campuses
 
-   int uniAKPIs = NUM_INITIAL_CAMPUSES * KPIPointsForCampus;
-   int uniBKPIs = NUM_INITIAL_CAMPUSES * KPIPointsForCampus;
-   int uniCKPIs = NUM_INITIAL_CAMPUSES * KPIPointsForCampus;
+   int uniAKPIs = NUM_INITIAL_CAMPUSES * KPI_POINTS_FOR_CAMPUS;
+   int uniBKPIs = NUM_INITIAL_CAMPUSES * KPI_POINTS_FOR_CAMPUS;
+   int uniCKPIs = NUM_INITIAL_CAMPUSES * KPI_POINTS_FOR_CAMPUS;
 
    assert (getKPIpoints (g, UNI_A) == uniAKPIs);
    assert (getKPIpoints (g, UNI_B) == uniBKPIs);
@@ -1081,19 +1081,19 @@ void testGetKPIpoints (void) {
 
    addCampus.destination = "R";
    makeAction (g, addCampus);
-   uniAKPIs += KPIPointsForCampus;
+   uniAKPIs += KPI_POINTS_FOR_CAMPUS;
    assert (getKPIpoints (g, UNI_A) == uniAKPIs);
    makeAction (g, pass);
 
    addCampus.destination = "L";
    makeAction (g, addCampus);
-   uniBKPIs += KPIPointsForCampus;
+   uniBKPIs += KPI_POINTS_FOR_CAMPUS;
    assert (getKPIpoints (g, UNI_B) == uniBKPIs);
    makeAction (g, pass);
 
    addCampus.destination = "LR";
    makeAction (g, addCampus);
-   uniCKPIs += KPIPointsForCampus;
+   uniCKPIs += KPI_POINTS_FOR_CAMPUS;
    assert (getKPIpoints (g, UNI_C) == uniCKPIs);
    makeAction (g, pass);
 
@@ -1102,22 +1102,22 @@ void testGetKPIpoints (void) {
 
    addGO8.destination = "RLLLLL";
    makeAction (g, addGO8);
-   uniAKPIs += KPIPointsForGO8;
-   uniAKPIs -= KPIPointsForCampus;
+   uniAKPIs += KPI_POINTS_FOR_GO8;
+   uniAKPIs -= KPI_POINTS_FOR_CAMPUS;
    assert (getKPIpoints (g, UNI_A) == uniAKPIs);
    makeAction (g, pass);
 
    addGO8.destination = "RRLRL";
    makeAction (g, addGO8);
-   uniBKPIs += KPIPointsForGO8;
-   uniBKPIs -= KPIPointsForCampus;
+   uniBKPIs += KPI_POINTS_FOR_GO8;
+   uniBKPIs -= KPI_POINTS_FOR_CAMPUS;
    assert (getKPIpoints (g, UNI_B) == uniBKPIs);
    makeAction (g, pass);
 
    addGO8.destination = "LRLRL";
    makeAction (g, addGO8);
-   uniCKPIs += KPIPointsForGO8;
-   uniCKPIs -= KPIPointsForCampus;
+   uniCKPIs += KPI_POINTS_FOR_GO8;
+   uniCKPIs -= KPI_POINTS_FOR_CAMPUS;
    assert (getKPIpoints (g, UNI_C) == uniCKPIs);
    makeAction (g, pass);
 
@@ -1126,27 +1126,27 @@ void testGetKPIpoints (void) {
 
    addARC.destination = "R";
    makeAction (g, addARC);
-   uniAKPIs += KPIPointsForARC;
-   uniAKPIs += KPIPointsForMostARCs;
+   uniAKPIs += KPI_POINTS_FOR_ARC;
+   uniAKPIs += KPI_POINTS_FOR_MOST_ARCS;
    assert (getKPIpoints (g, UNI_A) == uniAKPIs);
    makeAction (g, pass);
 
    addARC.destination = "L";
    makeAction (g, addARC);
-   uniBKPIs += KPIPointsForARC;
+   uniBKPIs += KPI_POINTS_FOR_ARC;
    assert (getKPIpoints (g, UNI_B) == uniBKPIs);
    makeAction (g, pass);
 
    addARC.destination = "LR";
    makeAction (g, addARC);
-   uniCKPIs += KPIPointsForARC;
+   uniCKPIs += KPI_POINTS_FOR_ARC;
    assert (getKPIpoints (g, UNI_C) == uniCKPIs);
 
    addARC.destination = "LRL";
    makeAction (g, addARC);
-   uniCKPIs += KPIPointsForARC;
-   uniCKPIs += KPIPointsForMostARCs;
-   uniAKPIs -= KPIPointsForMostARCs;
+   uniCKPIs += KPI_POINTS_FOR_ARC;
+   uniCKPIs += KPI_POINTS_FOR_MOST_ARCS;
+   uniAKPIs -= KPI_POINTS_FOR_MOST_ARCS;
    assert (getKPIpoints (g, UNI_C) == uniCKPIs);
    assert (getKPIpoints (g, UNI_A) == uniAKPIs);
    makeAction (g, pass);
@@ -1154,17 +1154,17 @@ void testGetKPIpoints (void) {
    // Assert that obtaining IP Patents affects KPIs accordingly
 
    makeAction (g, obtainIPPatent);
-   uniAKPIs += KPIPointsForPatentIP;
+   uniAKPIs += KPI_POINTS_FOR_IP;
    assert (getKPIpoints (g, UNI_A) == uniAKPIs);
    makeAction (g, pass);
 
    makeAction (g, obtainIPPatent);
-   uniBKPIs += KPIPointsForPatentIP;
+   uniBKPIs += KPI_POINTS_FOR_IP;
    assert (getKPIpoints (g, UNI_B) == uniBKPIs);
    makeAction (g, pass);
 
    makeAction (g, obtainIPPatent);
-   uniCKPIs += KPIPointsForPatentIP;
+   uniCKPIs += KPI_POINTS_FOR_IP;
    assert (getKPIpoints (g, UNI_C) == uniCKPIs);
    makeAction (g, pass);
 
@@ -1172,7 +1172,7 @@ void testGetKPIpoints (void) {
    // for every Uni Including prestige awards: getting and losing
 
    makeAction (g, obtainPublication);
-   uniAKPIs += KPIPointsForMostPublications;
+   uniAKPIs += KPI_POINTS_FOR_MOST_PUBLICATIONS;
    assert (getKPIpoints (g, UNI_A) == uniAKPIs);
    makeAction (g, pass);
 
@@ -1184,8 +1184,8 @@ void testGetKPIpoints (void) {
    assert (getKPIpoints (g, UNI_C) == uniCKPIs);
 
    makeAction (g, obtainPublication);
-   uniCKPIs += KPIPointsForMostPublications;
-   uniAKPIs -= KPIPointsForMostPublications;
+   uniCKPIs += KPI_POINTS_FOR_MOST_PUBLICATIONS;
+   uniAKPIs -= KPI_POINTS_FOR_MOST_PUBLICATIONS;
    assert (getKPIpoints (g, UNI_C) == uniCKPIs);
    assert (getKPIpoints (g, UNI_A) == uniAKPIs);
    makeAction (g, pass);
