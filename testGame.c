@@ -772,7 +772,56 @@ void testGetARC (void) {
 
 
 void testIsLegalAction (void) {
+   printf("Testing isLegalAction...\n");
 
+   // Valid action codes:
+   // PASS
+   // BUILD_CAMPUS
+   // BUILD_GO8
+   // OBTAIN_ARC
+   // START_SPINOFF
+   // OBTAIN_PUBLICATION
+   // OBTAIN_IP_PATENT
+   // RETRAIN_STUDENTS
+
+   // Criteria for an action to be valid:
+   // - It isn't currently Tera Nulius
+   // - The action is valid to be made at this time
+   // - The path is valid
+   //    - The path does not lead off the island
+   //    - It is of legal length
+   //    - It has only legal direction characters in it
+   // PASS
+   
+
+   // BUILD_CAMPUS
+   //  - The vertex is vacant
+   //  - The path is correct
+   //  - Is the vertex adjacent to one of the player's ARCs
+   //  - Does the university have the correct students to pay
+
+
+   // BUILD_GO8
+   //  - There is already a campuss here
+   //  - Has the students to pay
+   //  - There are less than 8 GO8s
+   // OBTAIN_ARC
+   //  - The edge is vacant
+   //  - The path is correct
+   //  - It is adjacent to a vertex which is adjacent to another
+   //    edge owned by the same person
+   // START_SPINOFF
+   //  - Has the right amount of students
+   //  - Has the right type of students
+   // OBTAIN_PUBLICATION
+   // OBTAIN_IP_PATENT
+   // RETRAIN_STUDENTS
+   //  - There are only legal discipline numbers
+   //     - 0, 1, 2, 3, 4, 5
+   //  - The university has the sufficient amount and type of
+   //    students to retrain these people
+
+   printf("Passed!\n");
 }
 
 
@@ -953,7 +1002,67 @@ void testGetKPIpoints (void) {
 
 
 void testGetARCs (void) {
+   printf("Testing getARCs...\n");
 
+   // Create a new Game, values of stuff again isn't important
+   Game g;
+
+   int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
+             STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+             STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+             STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+             STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+   int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
+
+   g = newGame(disciplines, dice);
+
+   // Assert that all players start off with no ARCs
+   assert (getARCs(g, UNI_A) == 0);
+   assert (getARCs(g, UNI_B) == 0);
+   assert (getARCs(g, UNI_C) == 0);
+
+   // Advance the game from "Terra Nullis"
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   // Initialise an action that adds an ARC and one that passes
+   action addARC;
+   addARC.actionCode = OBTAIN_ARC;
+
+   action pass;
+   pass.actionCode = PASS;
+
+   // Add an ARC for player A (the player whose turn it currently is)
+   // in a set position
+   addARC.destination = "R";
+   makeAction(g, addARC);
+
+   // Test it's number of ARCs is 1
+   assert(getARCs(g, UNI_A) == 1);
+
+   // End player A's turn
+   makeAction (g, pass);
+
+   // Add two ARCs for player B
+   makeAction (g, addARC);
+   addARC.destination = "L";
+   makeAction (g, addARC);
+
+   // Test it's number of ARCs is 2
+   assert (getARCs(g, UNI_B) == 2);
+
+   // End player B's turn
+   makeAction (g, pass);
+
+   // Advance the turn to UNI_C and give them an ARC
+   makeAction (g, addARC);
+
+   // Test it's number of ARCs is 1
+   assert (getARCs(g, UNI_C) == 1);
+
+   // End of tests! (? anything else Wezza/Matt ?)
+   disposeGame (g);
+
+   printf("Passed!\n");
 }
 
 
