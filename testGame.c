@@ -21,6 +21,7 @@
 #define INITIAL_NUMBER_OF_GO8s 0
 #define INITIAL_NUMBER_OF_IP_PATENTS 0
 #define INITIAL_NUMBER_OF_PUBLICATIONS 0
+#define NUM_VACANT_VERTICIES 48
 
 #define KPI_POINTS_FOR_CAMPUS 10
 #define KPI_POINTS_FOR_GO8 20
@@ -593,28 +594,12 @@ void testGetCampus (void) {
                     "LRLRLRRLRLRRLRLR"};
 
    int i = 0;
-   while(i < ) {
+   while(i < NUM_VACANT_VERTICIES) {
       pathToVertex = paths[i];
       assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
       i++;
    }
 
-<<<<<<< HEAD
-=======
-   // What is going on here?
-   pathToVertex = "LRLRLRRLRLR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
-
-   pathToVertex = "LRLRLRRLRLRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
-
-   pathToVertex = "LRLRLRRLRLRLR";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
-
-   pathToVertex = "LRLRLRRLRLRLRL";
-   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
-
->>>>>>> e1495429595b1c3f99cc070c5ac08ac6015bd7a4
    // Assert that adding campuses and GO8's works with (and without) 
    // convoluted paths
 
