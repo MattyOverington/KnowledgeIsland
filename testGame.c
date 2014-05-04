@@ -767,7 +767,81 @@ void testGetCampus (void) {
 
 
 void testGetARC (void) {
+   // Test that adding a campus affects the result of getARC
+   // accordingly
 
+   printf("Testing getARC\n");
+
+   // Create a new Game, values of stuff again isn't important
+
+   Game g;
+
+   int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+   int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
+
+   g = newGame (disciplines, dice);
+
+   // Advance the game from "Terra Nullis"
+
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   // Initialise some actions
+
+   action addARC;
+   addARC.actionCode = OBTAIN_ARC;
+
+   action pass;
+   pass.actionCode = PASS;
+
+   // TODO (if I can be bothered):
+   //    Check whether vacant ARCs are all vacant
+
+   // Assert that adding ARCs works with (and without) 
+   // convoluted paths
+
+   pathToVertex = "RL";
+   addARC.destination = pathToVertex;
+   makeAction (g, addARC);
+   assert (getARC (g, pathToVertex) == ARC_A);
+
+   pathToVertex = "LR";
+   addARC.destination = pathToVertex;
+   makeAction (g, addARC);
+   assert (getARC (g, pathToVertex) == ARC_A);
+
+   makeAction (g, pass);
+
+   pathToVertex = "RLLLLLLLRL";
+   addARC.destination = pathToVertex;
+   makeAction (g, addARC);
+   assert (getARC (g, pathToVertex) == ARC_B);
+
+   pathToVertex = "RLRLLLLLLLLLBLR";
+   addARC.destination = pathToVertex;
+   makeAction (g, addARC);
+   assert (getARC (g, pathToVertex) == ARC_B);
+
+   makeAction (g, pass);
+
+   pathToVertex = "LRLRRLBL";
+   addARC.destination = pathToVertex;
+   makeAction (g, addARC);
+   assert (getARC (g, pathToVertex) == ARC_C);
+
+   pathToVertex = "LRRLRL";
+   addARC.destination = pathToVertex;
+   makeAction (g, addARC);
+   assert (getARC (g, pathToVertex) == ARC_C);
+
+   // End of tests
+
+   disposeGame (g);
+
+   printf("Passed!\n");
 }
 
 
