@@ -13,6 +13,7 @@
 
 
 #define UNIMPORTANT_DICE_VALUE_FOR_TESTING 7
+#define OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING 6
 #define MIN_DICE_VALUE 2
 #define MAX_DICE_VALUE 12
 #define TURN_TESTING_ITERATIONS 1000
@@ -1583,7 +1584,7 @@ void testGetStudents (void) {
 
    // Advance the game from "Terra Nullis"
 
-   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    // Initialising some actions
 
@@ -1595,7 +1596,7 @@ void testGetStudents (void) {
 
    int i = 0;
    while (i < 10) {
-      throwDice(g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+      throwDice(g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
       makeAction(pass);
       i++;
    }
