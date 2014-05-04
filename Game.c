@@ -36,9 +36,9 @@ typedef struct _game {
 typedef struct _vertex {
    // Adjacent things
    edge *adjacentEdges[EDGES_PER_VERTEX]; // Wez changed this to a list
-                                          // pointers to edges, likewise
-                                          // regions and in other 
-                                          // structs
+                                          // of pointers to edges, 
+                                          // likewise regions and in 
+                                          // other structs
    region *adjacentRegions[REGIONS_PER_VERTEX];
 
    // Vertex attributes
