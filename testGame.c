@@ -599,6 +599,22 @@ void testGetCampus (void) {
       i++;
    }
 
+<<<<<<< HEAD
+=======
+   // What is going on here?
+   pathToVertex = "LRLRLRRLRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRLRLRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRLRLRLR";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+   pathToVertex = "LRLRLRRLRLRLRL";
+   assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
+
+>>>>>>> e1495429595b1c3f99cc070c5ac08ac6015bd7a4
    // Assert that adding campuses and GO8's works with (and without) 
    // convoluted paths
 
