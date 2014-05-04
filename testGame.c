@@ -12,11 +12,19 @@
 #include "Game.h"
 
 
-#define UNIMPORTANT_DICE_VALUE_FOR_TESTING 7; // wtf
-#define MIN_DICE_VALUE 2;
-#define MAX_DICE_VALUE 12;
-#define TURN_TESTING_ITERATIONS 1000;//ARBITRARILY_LARGE_NUMBER_TO_TEST_TURNS_UP_TO 1000;
-#define TERRA_NULLIS -1;
+#define UNIMPORTANT_DICE_VALUE_FOR_TESTING 7 // wtf
+#define MIN_DICE_VALUE 2
+#define MAX_DICE_VALUE 12
+#define TURN_TESTING_ITERATIONS 1000 //ARBITRARILY_LARGE_NUMBER_TO_TEST_TURNS_UP_TO 1000;
+#define TERRA_NULLIS -1
+#define NUM_INITIAL_CAMPUSES 2
+
+#define KPIPointsForCampus 10
+#define KPIPointsForGO8 20
+#define KPIPointsForARC 2
+#define KPIPointsForPatentIP 10
+#define KPIPointsForMostARCs 10
+#define KPIPointsForMostPublications 10
 
 
 // Setters
@@ -818,9 +826,178 @@ void testIsLegalAction(void) {
 }
 
 
-void testGetKPIpoints(void) {
-   printf("Testing getKPIpoints...\n");
+void testGetKPIpoints (void) {
+   // Test the getKPIpoints function
 
+   printf("Testing getKPIpoints\n");
+
+   // Create a new Game, values of stuff again isn't important
+
+   Game g;
+
+   int disciplines[] = {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, 
+                STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, 
+                STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS};
+   int dice[] = {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5};
+
+   g = newGame (disciplines, dice);
+
+   // Advance the game from "Terra Nullis"
+
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   // Initialise some actions
+
+   action addCampus;
+   addCampus.actionCode = BUILD_CAMPUS;
+
+   action addGO8;
+   addGO8.actionCode = BUILD_GO8;
+
+   action obtainArc;
+   obtainArc.actionCode = OBTAIN_ARC;
+
+   action obtainIPPatent;
+   obtainIPPatent.actionCode = OBTAIN_IP_PATENT;
+
+   action obtainPublication;
+   obtainPublication.actionCode = OBTAIN_PUBLICATION;
+
+   action pass;
+   pass.actionCode = PASS;
+
+   // Assert KPI points are correct at the start of the game
+   // The only KPI points Unis start with are the ones for
+   // their two initial ordinary campuses
+
+   int uniAKPIs = NUM_INITIAL_CAMPUSES * KPIPointsForCampus;
+   int uniBKPIs = NUM_INITIAL_CAMPUSES * KPIPointsForCampus;
+   int uniCKPIs = NUM_INITIAL_CAMPUSES * KPIPointsForCampus;
+
+   assert (getKPIpoints (g, UNI_A) == uniAKPIs);
+   assert (getKPIpoints (g, UNI_B) == uniBKPIs);
+   assert (getKPIpoints (g, UNI_C) == uniCKPIs);
+
+   // Assert adding campuses affects the KPI points correctly
+   // (for every uni)
+
+   addCampus.destination = "R";
+   makeAction (g, addCampus);
+   uniAKPIs += KPIPointsForCampus;
+   assert (getKPIpoints (g, UNI_A) == uniAKPIs);
+   makeAction (g, pass);
+
+   addCampus.destination = "L";
+   makeAction (g, addCampus);
+   uniBKPIs += KPIPointsForCampus;
+   assert (getKPIpoints (g, UNI_B) == uniBKPIs);
+   makeAction (g, pass);
+
+   addCampus.destination = "LR";
+   makeAction (g, addCampus);
+   uniCKPIs += KPIPointsForCampus;
+   assert (getKPIpoints (g, UNI_C) == uniCKPIs);
+   makeAction (g, pass);
+
+   // Assert turning one of a Uni's (any Uni's) original campuses 
+   // into a GO8 affects KPIs accordingly
+
+   addGO8.destination = "RLLLLL";
+   makeAction (g, addGO8);
+   uniAKPIs += KPIPointsForGO8;
+   uniAKPIs -= KPIPointsForCampus;
+   assert (getKPIpoints (g, UNI_A) == uniAKPIs);
+   makeAction (g, pass);
+
+   addGO8.destination = "RRLRL";
+   makeAction (g, addGO8);
+   uniBKPIs += KPIPointsForGO8;
+   uniBKPIs -= KPIPointsForCampus;
+   assert (getKPIpoints (g, UNI_B) == uniBKPIs);
+   makeAction (g, pass);
+
+   addGO8.destination = "LRLRL";
+   makeAction (g, addGO8);
+   uniCKPIs += KPIPointsForGO8;
+   uniCKPIs -= KPIPointsForCampus;
+   assert (getKPIpoints );(g, UNI_C) == uniCKPIs);
+   makeAction (g, pass
+
+   // Assert that adding ARCs affects KPIs accordingly for every Uni
+   // Including prestige awards: getting and losing
+
+   addARC.destination = "R";
+   makeAction (g, addARC);
+   uniAKPIs += KPIPointsForARC;
+   uniAKPIs += KPIPointsForMostARCs;
+   assert (getKPIpoints (g, UNI_A) == uniAKPIs);
+   makeAction (g, pass);
+
+   addARC.destination = "L";
+   makeAction (g, addARC);
+   uniBKPIs += KPIPointsForARC;
+   assert (getKPIpoints (g, UNI_B) == uniBKPIs);
+   makeAction (g, pass);
+
+   addARC.destination = "LR";
+   makeAction (g, addARC);
+   uniCKPIs += KPIPointsForARC;
+   assert (getKPIpoints (g, UNI_C) == uniCKPIs);
+
+   addARC.destination = "LRL";
+   makeAction (g, addARC);
+   uniCKPIs += KPIPointsForARC;
+   uniCKPIs += KPIPointsForMostARCs;
+   uniAKPIs -= KPIPointsForMostARCs;
+   assert (getKPIpoints (g, UNI_C) == uniCKPIs);
+   assert (getKPIpoints (g, UNI_A) == uniAKPIs);
+   makeAction (g, pass);
+
+   // Assert that obtaining IP Patents affects KPIs accordingly
+
+   makeAction (g, obtainIPPatent);
+   uniAKPIs += KPIPointsForPatentIP;
+   assert (getKPIpoints (g, UNI_A) == uniAKPIs);
+   makeAction (g, pass);
+
+   makeAction (g, obtainIPPatent);
+   uniBKPIs += KPIPointsForPatentIP;
+   assert (getKPIpoints (g, UNI_B) == uniBKPIs);
+   makeAction (g, pass);
+
+   makeAction (g, obtainIPPatent);
+   uniCKPIs += KPIPointsForPatentIP;
+   assert (getKPIpoints (g, UNI_C) == uniCKPIs);
+   makeAction (g, pass);
+
+   // Assert that obtaining publications affects KPIs accordingly 
+   // for every Uni Including prestige awards: getting and losing
+
+   makeAction (g, obtainPublication);
+   uniAKPIs += KPIPointsForMostPublications;
+   assert (getKPIpoints (g, UNI_A) == uniAKPIs);
+   makeAction (g, pass);
+
+   makeAction (g, obtainPublication);
+   assert (getKPIpoints (g, UNI_B) == uniBKPIs);
+   makeAction (g, pass);
+
+   makeAction (g, obtainPublication);
+   assert (getKPIpoints (g, UNI_C) == uniCKPIs);
+
+   makeAction (g, obtainPublication);
+   uniCKPIs += KPIPointsForMostPublications;
+   uniAKPIs -= KPIPointsForMostPublications;
+   assert (getKPIpoints (g, UNI_C) == uniCKPIs);
+   assert (getKPIpoints (g, UNI_A) == uniAKPIs);
+   makeAction (g, pass);
+
+   // End of these tests!
+
+   disposeGame (g);
+   
    printf("Passed!\n");
 }
 
