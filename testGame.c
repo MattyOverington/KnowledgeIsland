@@ -15,7 +15,7 @@
 #define UNIMPORTANT_DICE_VALUE_FOR_TESTING 7
 #define MIN_DICE_VALUE 2
 #define MAX_DICE_VALUE 12
-#define ARBITRARILY_LARGE_NUMBER_TO_TEST_TURNS_UP_TO 1000
+#define TURN_TESTING_ITERATIONS 1000
 #define TERRA_NULLIS -1
 #define NUM_INITIAL_CAMPUSES 2
 #define INITIAL_NUMBER_OF_GO8s 0
@@ -128,7 +128,7 @@ void testThrowDice (void) {
    // Loop over all possible dice scores and throw the dice for
    // that score
 
-   diceScore = MIN_DICE_VALUE;
+   int diceScore = MIN_DICE_VALUE;
 
    while (diceScore <= MAX_DICE_VALUE) {
       throwDice (g, diceScore);
@@ -164,10 +164,8 @@ void testMakeAction (void) {
    // Test making a campus
 
    action a;
-   path destination;
-   destination = "RL";
    a.actionCode = BUILD_CAMPUS;
-   a.destination = destination;
+   a.destination = "RL";
 
    makeAction (g, a);
 
@@ -361,7 +359,7 @@ void testGetTurnNumber (void) {
 
    int turnNumber = TERRA_NULLIS;
 
-   while (turnNumber <= ARBITRARILY_LARGE_NUMBER_TO_TEST_TURNS_UP_TO) {
+   while (turnNumber <= TURN_TESTING_ITERATIONS) {
       assert (getTurnNumber (g) == turnNumber);
 
       // Make three turns, one for each player
@@ -579,7 +577,7 @@ void testGetCampus (void) {
 
    // Assert that empty vertexes are as they should be
 
-   char *paths[] = {"R", "RR", "RRL", "RRLR", "L", "LR", "LRR", "LRRR", 
+   path paths[] = {"R", "RR", "RRL", "RRLR", "L", "LR", "LRR", "LRRR", 
                     "LRRRL", "LRRRLR", "LRRRLRL", "LRRRLRLR", 
                     "LRRRLRLRL", "LRL", "LRLR", "LRLRR", "LRLRRR", 
                     "LRLRRRL", "LRLRRRLR", "LRLRRRLRL", "LRLRRRLRLR", 
@@ -1700,7 +1698,50 @@ void testGetPublications (void) {
 
 
 void testGetStudents (void) {
+   printf("Testing getStudents\n");
 
+   // Create a new Game, values of stuff again isn't important
+
+   Game g;
+
+   int disciplines[] = {STUDENT_MTV, STUDENT_MTV, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_MTV, STUDENT_MTV, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_MTV, STUDENT_MTV, STUDENT_MTV, 
+                STUDENT_MTV, STUDENT_MJ, STUDENT_MJ, STUDENT_MJ, 
+                STUDENT_MJ, STUDENT_MJ, STUDENT_MJ, STUDENT_MJ};
+   int dice[] = {1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4,5,6,7};
+
+   g = newGame (disciplines, dice);
+
+   // Advance the game from "Terra Nullis"
+
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   // Initialising some actions
+
+   action pass;
+   pass.actionCode = PASS;
+
+   // Giving the all the players (as a whole) an MTV student per 
+   // iteration
+
+   int i = 0;
+   while (i < 10) {
+      throwDice(g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+      makeAction(pass);
+      i++;
+   }
+
+   // Asserting that they have 10 STUDENT_MTV's
+   assert(getStudents(g, UNI_A, STUDENT_MTV) +
+          getStudents(g, UNI_B, STUDENT_MTV) +
+          getStudents(g, UNI_C, STUDENT_MTV)) == 10);
+
+   // End of tests!
+
+   disposeGame(g);
+
+   printf("Passed!\n");
 }
 
 
