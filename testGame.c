@@ -731,6 +731,7 @@ void testGetCampus (void) {
    // pathToVertex = "LRLRLRRLRLRLRLRL";
    // assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
+   // What is going on here?
    pathToVertex = "LRLRLRRLRLR";
    assert (getCampus (g, pathToVertex) == VACANT_VERTEX);
 
@@ -896,11 +897,17 @@ void testIsLegalAction (void) {
    action obtainArc;
    obtainArc.actionCode = OBTAIN_ARC;
 
+   action startSpinoff;
+   startSpinoff.actionCode = START_SPINOFF;
+
    action obtainIPPatent;
    obtainIPPatent.actionCode = OBTAIN_IP_PATENT;
 
    action obtainPublication;
    obtainPublication.actionCode = OBTAIN_PUBLICATION;
+
+   action retrainStudents;
+   retrainStudents.actionCode = RETRAIN_STUDENTS;
 
    action pass;
    pass.actionCode = PASS;
@@ -922,16 +929,19 @@ void testIsLegalAction (void) {
    // --------------------------------------------
 
    // - Doesn't have the students to pay for campus
-   
+   buildCampus.destination = "L";
+   assert(isLegalAction(g, buildCampus) == FALSE);
 
    // - Doesn't have the students to pay for GO8
-
+   // How??
 
    // - Has the right amount of students to start a spinoff
-
+   assert(isLegalAction(startSpinoff) == FALSE);
 
    // - The university has the sufficient students to retrain people
-
+   retrainStudents.disciplineFrom = STUDENT_MTV;
+   retrainStudents.disciplineTo = STUDENT_BPS;
+   assert(isLegalAction(retrainStudents) == FALSE);
 
    // -----------------------------------------------------
    // Iterating over turns to give players enough resources
@@ -1017,7 +1027,7 @@ void testIsLegalAction (void) {
    // Making seven (more) GO8s
    char *GO8Paths[] = {"LR", "LRL", "LRLR", "LRLRL", 
                        "LRLRLR", "LRLRLRL", "LRLRLRLR", "LRLRLRLRL"};
-   int i = 0;
+   i = 0;
    while(i < 7) {
       obtainArc.destination = GO8Paths[i];
       buildCampus.destination = GO8Paths[i];
@@ -1034,25 +1044,57 @@ void testIsLegalAction (void) {
    buildGO8.destination = GO8Paths[7];
    makeAction(g, obtainArc);
    makeAction(g, buildCampus);
-   makeAction(g, buildGO8);
+   assert(isLegalAction(g, buildGO8) == FALSE);
+
+   // Making new game because there is too much crap on the old one
+   disposeGame(g);
+   Game g = newGame (disciplines, dice);
+   i = 0;
+   throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+   while(i < TURN_TESTING_ITERATIONS) {
+      makeAction(pass);
+      throwDice(g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+      i++;
+   }
 
    // --------------------------------------------
    // OBTAIN_ARC
    // --------------------------------------------
 
    // Legals
-
+   obtainArc.destination = "L";
+   assert(isLegalAction(g, obtainArc) == TRUE);
 
    // Illegals
-   // - The edge is vacant
 
+   // - The edge isn't vacant
 
-   // - The path is correct
+   obtainArc.destination = "L";
+   makeAction(g, obtainArc);
+   assert(isLegalAction(g, obtainArc) == FALSE);
 
+   // - The path is incorrect
+
+   //    - The path leads off the island
+   obtainArc.destination = "BBBBBBBBBBB";
+   assert(isLegalAction(g, obtainArc) == FALSE);
+
+   //    - It isn't of legal length
+   obtainArc.destination = "RLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+                            LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+                            LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+                            LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL";
+   assert(isLegalAction(g, obtainArc) == FALSE);
+
+   //    - It has illegal direction characters in it
+   obtainArc.destination = "XXXXX";
+   assert(isLegalAction(g, obtainArc) == FALSE);
 
    // - It is adjacent to a vertex which is adjacent to another
    //   edge owned by the same person
 
+   obtainArc.destination = "LRL";
+   assert(isLegalAction(g, obtainArc) == FALSE);
 
    // --------------------------------------------
    // START_SPINOFF
@@ -1060,7 +1102,7 @@ void testIsLegalAction (void) {
 
    // Legals
 
-
+   assert(isLegalAction(g, startSpinoff) == TRUE);
 
    // --------------------------------------------
    // OBTAIN_PUBLICATION
@@ -1087,12 +1129,41 @@ void testIsLegalAction (void) {
    // --------------------------------------------
 
    // Legals
-   
+
+   retrainStudents.disciplineFrom = STUDENT_MTV;
+   retrainStudents.disciplineTo = STUDENT_BPS;
+   assert(isLegalAction(g, retrainStudents) == TRUE);
 
    // Illegals
-   // - There are only legal discipline numbers (0, 1, 2, 3, 4, 5)
 
+   // - There aren't only legal discipline numbers (0, 1, 2, 3, 4, 5)
 
+   retrainStudents.disciplineFrom = 4;
+   retrainStudents.disciplineTo = 6;
+   assert(isLegalAction(g, retrainStudents) == FALSE);
+
+   retrainStudents.disciplineFrom = 6;
+   retrainStudents.disciplineTo = 4;
+   assert(isLegalAction(g, retrainStudents) == FALSE);
+
+   retrainStudents.disciplineFrom = 6;
+   retrainStudents.disciplineTo = 7;
+   assert(isLegalAction(g, retrainStudents) == FALSE);
+
+   // - Wrong discipline convertions
+
+   retrainStudents.disciplineFrom = STUDENT_THD;
+   retrainStudents.disciplineTo = STUDENT_MMONEY;
+   assert(isLegalAction(g, retrainStudents) == FALSE);
+
+   // - Converting to the same thing
+
+   retrainStudents.disciplineFrom = STUDENT_MMONEY;
+   retrainStudents.disciplineTo = STUDENT_MMONEY;
+   assert(isLegalAction(g, retrainStudents) == FALSE);
+
+   // Done (I really am not sure -- will need aditions as we go along)
+   disposeGame(g);
 
    printf("Passed!\n");
 }
