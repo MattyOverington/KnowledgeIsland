@@ -156,13 +156,23 @@ int getDiceValue (Game g, int regionID) {
 // this is NO_ONE until the first arc is purchased after the game 
 // has started.  
 int getMostARCs (Game g) {
+   // Get the value of the atribute that stores the player with
+   // the most ARCs
+   int playerWithMostARCs = g->playerWithMostARCs;
 
+   // Return this value
+   return playerWithMostARCs;
 }
  
 // which university currently has the prestige award for the most pubs?
 // this is NO_ONE until the first publication is made.
 int getMostPublications (Game g) {
+   // Get the value of the atribute that stores the player with
+   // the most publications
+   int playerWithMostPublications = g->playerWithMostPublications;
 
+   // Return this value
+   return playerWithMostPublications;
 }
  
 // return the current turn number of the game -1,0,1, ..
