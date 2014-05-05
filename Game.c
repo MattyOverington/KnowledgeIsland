@@ -177,13 +177,21 @@ int getMostPublications (Game g) {
  
 // return the current turn number of the game -1,0,1, ..
 int getTurnNumber (Game g) {
+   // Get the value of the atribute that stores the turn number
+   int turnNumber = g->turnNumber;
 
+   // Return this value
+   return turnNumber;
 }
  
 // return the player id of the player whose turn it is 
 // the result of this function is NO_ONE during Terra Nullis
 int getWhoseTurn (Game g) {
+   // Get the value of the atribute that stores whose turn it is
+   int whoseTurn = g->whoseTurn;
 
+   // Return this value
+   return whoseTurn;
 }
  
 // return the contents of the given vertex (ie campus code or 
