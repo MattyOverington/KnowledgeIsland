@@ -1,0 +1,82 @@
+Splitting up of the Game.c functions brainstorm
+
+Hector:
+
+   isLegalAction:
+      You wrote the tests so it's probs best if you write this one
+
+Wez:
+
+   
+
+Matt:
+
+
+
+Hard SETTERS:
+
+   newGame
+
+   This one in particular is difficult and time consuming
+
+   makeAction
+
+   Will be very time consuming but largely not entirely difficult
+   Debugging this may be hard...
+
+Moderate SETTERS:
+
+   disposeGame
+
+   Not too hard, just make sure all mallocs are paired with a free
+
+   throwDice
+
+   Again not too hard, especially with some clarification
+   as to its function
+
+
+Hard GETTERS:
+
+   isLegalAction -> Sorry Hector... :/
+
+   This/these functions actually require some difficult calculations
+
+Moderate GETTERS:
+
+   getDiscipline
+   getDiceValue
+
+   These won't really be very hard, especially if you make sure in
+   newGame you index the list of pointers to region structs in the
+   same order as the two parsed lists
+
+   getCampus
+   getARC
+
+   These require some following of pointers but won't be *too* difficult
+   Though following paths will require some working out
+   Maybe one person just both of these ones as they are pretty similar
+
+   getExchangeRate
+
+   Again, hard but not ridiculously so, especially if all the retraining
+   centres are in the same places. You could just store a path to each
+   of the retraining centres and use getCampus to check if the player
+   has one there.
+
+Easy GETTERS:
+
+   getMostARCs
+   getMostPublications
+   getTurnNumber
+   getWhoseTurn
+   getKPIpoints
+   getARCs
+   getCampuses
+   getGO8s
+   getIPs
+   getPublications
+   getStudents
+
+   All of these have an atribute in one of the structs so thats easy   
