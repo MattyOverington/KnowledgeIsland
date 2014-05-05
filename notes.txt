@@ -33,17 +33,6 @@ NOTICES FOR THE GROUP:
 /********************************************************************\
 
 Nope:
-//Things To Do -
-//   Matt your wrong
-//   - Game.c
-//      - Set up data storage
-//         - Make structs for verts, edges and faces
-//         - Methods for doing pointers between arrays for us (?)
-//         - Other methods we think we'll need
-//         - Make lists, finialse and done??
-//         
-//   - Testing Stuff
-//      -???
 
 To do for now (needs updating):
 - Create structs for verts, edges, and regions in the .c
@@ -75,6 +64,8 @@ Hector:
 
    isLegalAction:
       You wrote the tests so it's probs best if you write this one
+      k i will
+
 
 Wez:
 
@@ -150,7 +141,7 @@ Easy GETTERS:
    getPublications
    getStudents
 
-   All of these have an atribute in one of the structs so thats easy   
+   All of these have an attribute in one of the structs so thats easy   
    
    
    

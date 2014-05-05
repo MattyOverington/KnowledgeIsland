@@ -1572,6 +1572,29 @@ void testGetStudents (void) {
 
    g = newGame (disciplines, dice);
 
+   // Asserting that all player start with correct number of students
+   // At the start they have 3 x BPS, 3 x B?, 1 x MTV, 
+   // 1 x MJ, 1 x M$, and no ThD students
+
+   assert(getStudents(g, UNI_A, STUDENT_BPS) == 3);
+   assert(getStudents(g, UNI_A, STUDENT_BQN) == 3);
+   assert(getStudents(g, UNI_A, STUDENT_MTV) == 1);
+   assert(getStudents(g, UNI_A, STUDENT_MJ) == 1);
+   assert(getStudents(g, UNI_A, STUDENT_MMONEY) == 1);
+   assert(getStudents(g, UNI_A, STUDENT_THD) == 0);
+   assert(getStudents(g, UNI_B, STUDENT_BPS) == 3);
+   assert(getStudents(g, UNI_B, STUDENT_BQN) == 3);
+   assert(getStudents(g, UNI_B, STUDENT_MTV) == 1);
+   assert(getStudents(g, UNI_B, STUDENT_MJ) == 1);
+   assert(getStudents(g, UNI_B, STUDENT_MMONEY) == 1);
+   assert(getStudents(g, UNI_B, STUDENT_THD) == 0);
+   assert(getStudents(g, UNI_C, STUDENT_BPS) == 3);
+   assert(getStudents(g, UNI_C, STUDENT_BQN) == 3);
+   assert(getStudents(g, UNI_C, STUDENT_MTV) == 1);
+   assert(getStudents(g, UNI_C, STUDENT_MJ) == 1);
+   assert(getStudents(g, UNI_C, STUDENT_MMONEY) == 1);
+   assert(getStudents(g, UNI_C, STUDENT_THD) == 0);
+
    // Advance the game from "Terra Nullis"
 
    throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
@@ -1594,7 +1617,7 @@ void testGetStudents (void) {
    // Asserting that they have 10 STUDENT_MTV's
    assert(getStudents(g, UNI_A, STUDENT_MTV) +
           getStudents(g, UNI_B, STUDENT_MTV) +
-          getStudents(g, UNI_C, STUDENT_MTV)) == 10);
+          getStudents(g, UNI_C, STUDENT_MTV)) == 13);
 
    // End of tests!
 
