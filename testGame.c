@@ -14,6 +14,7 @@
 
 #define UNIMPORTANT_DICE_VALUE_FOR_TESTING 7
 #define OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING 6
+#define DROP_OUT_DICE_VALUE 7
 #define MIN_DICE_VALUE 2
 #define MAX_DICE_VALUE 12
 #define TURN_TESTING_ITERATIONS 1000
@@ -111,6 +112,7 @@ void testNewGame (void) {
 void testThrowDice (void) {
    // As above, test to see that throwing the dice doesn't result in
    // the game crashing.
+   // Also checks MTV and MMONEY students dropping out
 
    printf("Testing throwDice\n");
 
@@ -135,6 +137,30 @@ void testThrowDice (void) {
    while (diceScore <= MAX_DICE_VALUE) {
       throwDice (g, diceScore);
    }
+
+   disposeGame (g);
+
+   // Test MTV and MMONEY students dropping out
+
+   int newDice = {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+                  2, 2, 2, 2}
+
+   Game g;
+   g = newGame (disciplines, newDice);
+
+   // Get out of Terra Nullis
+
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   throwDice (g, DROP_OUT_DICE_VALUE);
+
+   assert (getStudents (g, UNI_A, MTV) == 0);
+   assert (getStudents (g, UNI_B, MTV) == 0);
+   assert (getStudents (g, UNI_C, MTV) == 0);
+
+   assert (getStudents (g, UNI_A, MMONEY) == 0);
+   assert (getStudents (g, UNI_B, MMONEY) == 0);
+   assert (getStudents (g, UNI_C, MMONEY) == 0);
 
    printf("Passed!\n");
 }
