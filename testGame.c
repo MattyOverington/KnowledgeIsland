@@ -14,6 +14,7 @@
 
 #define UNIMPORTANT_DICE_VALUE_FOR_TESTING 7
 #define OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING 6
+#define DROP_OUT_DICE_VALUE 7
 #define MIN_DICE_VALUE 2
 #define MAX_DICE_VALUE 12
 #define TURN_TESTING_ITERATIONS 1000
@@ -111,6 +112,7 @@ void testNewGame (void) {
 void testThrowDice (void) {
    // As above, test to see that throwing the dice doesn't result in
    // the game crashing.
+   // Also checks MTV and MMONEY students dropping out
 
    printf("Testing throwDice\n");
 
@@ -135,6 +137,30 @@ void testThrowDice (void) {
    while (diceScore <= MAX_DICE_VALUE) {
       throwDice (g, diceScore);
    }
+
+   disposeGame (g);
+
+   // Test MTV and MMONEY students dropping out
+
+   int newDice = {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+                  2, 2, 2, 2}
+
+   Game g;
+   g = newGame (disciplines, newDice);
+
+   // Get out of Terra Nullis
+
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
+
+   throwDice (g, DROP_OUT_DICE_VALUE);
+
+   assert (getStudents (g, UNI_A, MTV) == 0);
+   assert (getStudents (g, UNI_B, MTV) == 0);
+   assert (getStudents (g, UNI_C, MTV) == 0);
+
+   assert (getStudents (g, UNI_A, MMONEY) == 0);
+   assert (getStudents (g, UNI_B, MMONEY) == 0);
+   assert (getStudents (g, UNI_C, MMONEY) == 0);
 
    printf("Passed!\n");
 }
@@ -317,14 +343,17 @@ void testGetWhoseTurn (void) {
    assert (getWhoseTurn (g) == UNI_A);
 
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    assert (getWhoseTurn (g) == UNI_B);
 
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    assert (getWhoseTurn (g) == UNI_C);
 
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    assert (getWhoseTurn (g) == UNI_A);
 
@@ -366,8 +395,11 @@ void testGetTurnNumber (void) {
 
       // Make three turns, one for each player
       makeAction (g, pass);
+      throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
       makeAction (g, pass);
+      throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
       makeAction (g, pass);
+      throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
       turnNumber ++;
    }
@@ -423,6 +455,7 @@ void testGetMostARCs (void) {
    // Then assert that UNI_A still has the title
 
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
    makeAction (g, addARC);
 
    assert (getMostARCs (g) == UNI_A);
@@ -493,6 +526,7 @@ void testGetMostPublications (void) {
    // Then assert that UNI_A still has the title
 
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
    makeAction (g, obtainPublication);
 
    assert (getMostPublications (g) == UNI_A);
@@ -507,6 +541,7 @@ void testGetMostPublications (void) {
    // Cycle on to next player then test again, just to check
 
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    assert (getMostPublications (g) == UNI_B);
 
@@ -615,6 +650,7 @@ void testGetCampus (void) {
    assert (getCampus (g, pathToVertex) == GO8_A);
 
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    pathToVertex = "RLLLLLLLRL";
    addCampus.destination = pathToVertex;
@@ -627,6 +663,7 @@ void testGetCampus (void) {
    assert (getCampus (g, pathToVertex) == GO8_B);
 
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    pathToVertex = "LRLRRLBL";
    addCampus.destination = pathToVertex;
@@ -692,6 +729,7 @@ void testGetARC (void) {
    assert (getARC (g, pathToVertex) == ARC_A);
 
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    pathToVertex = "RLLLLLLLRL";
    addARC.destination = pathToVertex;
@@ -704,6 +742,7 @@ void testGetARC (void) {
    assert (getARC (g, pathToVertex) == ARC_B);
 
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    pathToVertex = "LRLRRLBL";
    addARC.destination = pathToVertex;
@@ -806,7 +845,7 @@ void testIsLegalAction (void) {
 
    int i = 0;
    while(i < TURN_TESTING_ITERATIONS) {
-      makeAction(pass);
+      makeAction (g, pass);
       throwDice(g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
       i++;
    }
@@ -909,7 +948,7 @@ void testIsLegalAction (void) {
    i = 0;
    throwDice (g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
    while(i < TURN_TESTING_ITERATIONS) {
-      makeAction(pass);
+      makeAction (g, pass);
       throwDice(g, UNIMPORTANT_DICE_VALUE_FOR_TESTING);
       i++;
    }
@@ -1086,18 +1125,21 @@ void testGetKPIpoints (void) {
    uniAKPIs += KPI_POINTS_FOR_CAMPUS;
    assert (getKPIpoints (g, UNI_A) == uniAKPIs);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    addCampus.destination = "L";
    makeAction (g, addCampus);
    uniBKPIs += KPI_POINTS_FOR_CAMPUS;
    assert (getKPIpoints (g, UNI_B) == uniBKPIs);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    addCampus.destination = "LR";
    makeAction (g, addCampus);
    uniCKPIs += KPI_POINTS_FOR_CAMPUS;
    assert (getKPIpoints (g, UNI_C) == uniCKPIs);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    // Assert turning one of a Uni's (any Uni's) original campuses 
    // into a GO8 affects KPIs accordingly
@@ -1108,6 +1150,7 @@ void testGetKPIpoints (void) {
    uniAKPIs -= KPI_POINTS_FOR_CAMPUS;
    assert (getKPIpoints (g, UNI_A) == uniAKPIs);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    addGO8.destination = "RRLRL";
    makeAction (g, addGO8);
@@ -1115,6 +1158,7 @@ void testGetKPIpoints (void) {
    uniBKPIs -= KPI_POINTS_FOR_CAMPUS;
    assert (getKPIpoints (g, UNI_B) == uniBKPIs);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    addGO8.destination = "LRLRL";
    makeAction (g, addGO8);
@@ -1122,6 +1166,7 @@ void testGetKPIpoints (void) {
    uniCKPIs -= KPI_POINTS_FOR_CAMPUS;
    assert (getKPIpoints (g, UNI_C) == uniCKPIs);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    // Assert that adding ARCs affects KPIs accordingly for every Uni
    // Including prestige awards: getting and losing
@@ -1132,12 +1177,14 @@ void testGetKPIpoints (void) {
    uniAKPIs += KPI_POINTS_FOR_MOST_ARCS;
    assert (getKPIpoints (g, UNI_A) == uniAKPIs);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    addARC.destination = "L";
    makeAction (g, addARC);
    uniBKPIs += KPI_POINTS_FOR_ARC;
    assert (getKPIpoints (g, UNI_B) == uniBKPIs);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    addARC.destination = "LR";
    makeAction (g, addARC);
@@ -1152,6 +1199,7 @@ void testGetKPIpoints (void) {
    assert (getKPIpoints (g, UNI_C) == uniCKPIs);
    assert (getKPIpoints (g, UNI_A) == uniAKPIs);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    // Assert that obtaining IP Patents affects KPIs accordingly
 
@@ -1159,16 +1207,19 @@ void testGetKPIpoints (void) {
    uniAKPIs += KPI_POINTS_FOR_IP;
    assert (getKPIpoints (g, UNI_A) == uniAKPIs);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    makeAction (g, obtainIPPatent);
    uniBKPIs += KPI_POINTS_FOR_IP;
    assert (getKPIpoints (g, UNI_B) == uniBKPIs);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    makeAction (g, obtainIPPatent);
    uniCKPIs += KPI_POINTS_FOR_IP;
    assert (getKPIpoints (g, UNI_C) == uniCKPIs);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    // Assert that obtaining publications affects KPIs accordingly 
    // for every Uni Including prestige awards: getting and losing
@@ -1177,10 +1228,12 @@ void testGetKPIpoints (void) {
    uniAKPIs += KPI_POINTS_FOR_MOST_PUBLICATIONS;
    assert (getKPIpoints (g, UNI_A) == uniAKPIs);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    makeAction (g, obtainPublication);
    assert (getKPIpoints (g, UNI_B) == uniBKPIs);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    makeAction (g, obtainPublication);
    assert (getKPIpoints (g, UNI_C) == uniCKPIs);
@@ -1191,6 +1244,7 @@ void testGetKPIpoints (void) {
    assert (getKPIpoints (g, UNI_C) == uniCKPIs);
    assert (getKPIpoints (g, UNI_A) == uniAKPIs);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    // End of these tests!
 
@@ -1240,6 +1294,7 @@ void testGetARCs (void) {
 
    // End player A's turn
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    // Add two ARCs for player B
    makeAction (g, addARC);
@@ -1251,6 +1306,7 @@ void testGetARCs (void) {
 
    // End player B's turn
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    // Advance the turn to UNI_C and give them an ARC
    makeAction (g, addARC);
@@ -1313,18 +1369,21 @@ void testGetCampuses (void) {
    numUniACampuses += 1;
    assert (getCampus (g, UNI_A) == numUniACampuses);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    addCampus.destination = "L";
    makeAction (g, addCampus);
    numUniBCampuses += 1;
    assert (getCampus (g, UNI_B) == numUniBCampuses);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    addCampus.destination = "LR";
    makeAction (g, addCampus);
    numUniCCampuses += 1;
    assert (getCampus (g, UNI_C) == numUniCCampuses);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    // Assert changing a campus into a GO8 reduces the apparent
    // number of campuses accordingly
@@ -1334,18 +1393,21 @@ void testGetCampuses (void) {
    numUniACampuses -= 1;
    assert (getKPIpoints (g, UNI_A) == numUniACampuses);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    addGO8.destination = "RRLRL";
    makeAction (g, addGO8);
    numUniBCampuses -= 1;
    assert (getKPIpoints (g, UNI_B) == numUniBCampuses);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    addGO8.destination = "LRLRL";
    makeAction (g, addGO8);
    numUniCCampuses -= 1;
    assert (getKPIpoints (g, UNI_C) == numUniCCampuses);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    // End of tests!
 
@@ -1403,18 +1465,21 @@ void testGetGO8s (void) {
    numUniAGO8 += 1;
    assert (getGO8s (g, UNI_A) == numUniAGO8);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    addGO8.destination = "RRLRL";
    makeAction (g, addGO8);
    numUniBGO8 += 1;
    assert (getGO8s (g, UNI_B) == numUniBGO8);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    addGO8.destination = "LRLRL";
    makeAction (g, addGO8);
    numUniCGO8 += 1;
    assert (getGO8s (g, UNI_C) == numUniCGO8);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    // End of tests!
 
@@ -1471,16 +1536,19 @@ void testGetIPs (void) {
    numUniAIPs += 1;
    assert (getIPs (g, UNI_A) == numUniAIPs);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    makeAction (g, obtainIPPatent);
    numUniBIPs += 1;
    assert (getIPs (g, UNI_B) == numUniBIPs);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    makeAction (g, obtainIPPatent);
    numUniCIPs += 1;
    assert (getIPs (g, UNI_C) == numUniCIPs);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    // End of tests!
 
@@ -1537,16 +1605,19 @@ void testGetPublications (void) {
    numUniAPublications += 1;
    assert (getPublications (g, UNI_A) == numUniAPublications);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    makeAction (g, obtainPublication);
    numUniBPublications += 1;
    assert (getPublications (g, UNI_B) == numUniBPublications);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    makeAction (g, obtainPublication);
    numUniCPublications += 1;
    assert (getPublications (g, UNI_C) == numUniCPublications);
    makeAction (g, pass);
+   throwDice (g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
 
    // End of tests!
 
@@ -1610,7 +1681,7 @@ void testGetStudents (void) {
    int i = 0;
    while (i < 10) {
       throwDice(g, OTHER_UNIMPORTANT_DICE_VALUE_FOR_TESTING);
-      makeAction(pass);
+      makeAction (g, pass);
       i++;
    }
 
