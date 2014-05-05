@@ -154,13 +154,13 @@ void testThrowDice (void) {
 
    throwDice (g, DROP_OUT_DICE_VALUE);
 
-   assert (getStudents (g, UNI_A, MTV) == 0);
-   assert (getStudents (g, UNI_B, MTV) == 0);
-   assert (getStudents (g, UNI_C, MTV) == 0);
+   assert (getStudents (g, UNI_A, STUDENT_MTV) == 0);
+   assert (getStudents (g, UNI_B, STUDENT_MTV) == 0);
+   assert (getStudents (g, UNI_C, STUDENT_MTV) == 0);
 
-   assert (getStudents (g, UNI_A, MMONEY) == 0);
-   assert (getStudents (g, UNI_B, MMONEY) == 0);
-   assert (getStudents (g, UNI_C, MMONEY) == 0);
+   assert (getStudents (g, UNI_A, STUDENT_MMONEY) == 0);
+   assert (getStudents (g, UNI_B, STUDENT_MMONEY) == 0);
+   assert (getStudents (g, UNI_C, STUDENT_MMONEY) == 0);
 
    printf("Passed!\n");
 }
