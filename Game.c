@@ -15,7 +15,51 @@
 #define VERTICES_PER_EDGE 2
 #define VERTICES_PER_REGION 6
 
+#define GO8_OFFSET 3
+
+#define DEFAULT_EXCHANGE_RATE 3
+#define EXCHAGE_RATE_WITH_CENTRE 2
+
+#define KPIS_FOR_CAMPUS 10
+#define KPIS_FOR_GO8 20
+#define KPIS_FOR_ARC 2
+#define KPIS_FOR_IP 10
+#define KPIS_FOR_MOST_ARCS 10
+#define KPIS_FOR_MOST_PUBLICATIONS 10
+
+#define NUM_INITIAL_THD_STUDENTS 0
+#define NUM_INITIAL_BPS_STUDENTS 3
+#define NUM_INITIAL_BQN_STUDENTS 3
+#define NUM_INITIAL_MJ_STUDENTS 1
+#define NUM_INITIAL_MTV_STUDENTS 1
+#define NUM_INITIAL_MMONEY_STUDENTS 1
+
+// disciplines
+#define STUDENT_THD 0
+#define STUDENT_BPS 1
+#define STUDENT_BQN 2
+#define STUDENT_MJ  3
+#define STUDENT_MTV 4
+#define STUDENT_MMONEY 5
+
+// Paths to retraining centres
+#define PATH_TO_RETRAINING_CENTRE_BPS "RLRLRLRLRR"
+#define PATH_TO_RETRAINING_CENTRE_BQN "LRLRLRRL"
+#define PATH_TO_RETRAINING_CENTRE_MJ_ONE "RLRLRLLRLR"
+#define PATH_TO_RETRAINING_CENTRE_MJ_TWO "RLRLRLLRLRR"
+#define PATH_TO_RETRAINING_CENTRE_MTV "RR"
+#define PATH_TO_RETRAINING_CENTRE_MMONEY_ONE "LR"
+#define PATH_TO_RETRAINING_CENTRE_MMONEY_TWO "LRL"
+
+#define NUM_INITIAL_CAMPUSES 2
+
 #define NUM_PLAYERS 3
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <assert.h>
+
+#include "Game.h"
 
 
 typedef struct _game {
@@ -113,7 +157,46 @@ typedef struct _player {
 // PUT HERE ALL STUFF WE NEED TO BE CAREFUL OF IN newGame
                 // Players and regions declared in list in correct order
 Game newGame (int discipline[], int dice[]) {
+   
+   // Declare game
+   game createdGame;
+   Game pointerToGame;
 
+   // Initialise the players
+   numPlayersInitialised = 1;
+   player players[NUM_UNIS];
+
+   while (numPlayersInitialised <= NUM_UNIS) {
+      player p;
+
+      // Initialise player possessions
+      p.playerID = numPlayersInitialised;
+
+      p.KPIs = NUM_INITIAL_CAMPUSES * KPIS_FOR_CAMPUS;
+      p.patents = 0;
+      p.publications = 0;
+      p.regularCampuses = NUM_INITIAL_CAMPUSES;
+      p.GO8Campuses = 0;
+      p.ARCs = 0;
+
+      // Initialise player's students
+      p.THDs = NUM_INITIAL_THD_STUDENTS;
+      p.BPSs = NUM_INITIAL_BPS_STUDENTS;
+      p.BQNs = NUM_INITIAL_BQN_STUDENTS;
+      p.MJs = NUM_INITIAL_MJ_STUDENTS;
+      p.MTVs = NUM_INITIAL_MTV_STUDENTS;
+      p.MMONEYs = NUM_INITIAL_MMONEY_STUDENTS;
+
+      // Put player into array
+      players[numPlayersInitialised - 1] = p;
+
+      numPlayersInitialised ++;
+   }
+
+   // Put array of players into game
+   createdGame.players = players;
+
+   
 }
  
 // free all the memory malloced for the game
@@ -360,6 +443,83 @@ int getStudents (Game g, int player, int discipline) {
 int getExchangeRate (Game g, int player, 
                      int disciplineFrom, int disciplineTo) {
 
+   // Check that you aren't trying to retrain THDs
+   assert (disciplineFrom != STUDENT_THD);
+
+   int exchangeRate;
+   int campusAtRetrainingCentre;
+   int campusAtRetrainingCentreTwo;
+
+   // Check whether the player has a retraining centre for the
+   // pertinent discipline
+   if (disciplineFrom == STUDENT_BPS) {
+      campusAtRetrainingCentre = 
+            getCampus (g, PATH_TO_RETRAINING_CENTRE_BPS);
+
+      if (campusAtRetrainingCentre == player
+            || campusAtRetrainingCentre == player + GO8_OFFSET) {
+         exchangeRate = EXCHAGE_RATE_WITH_CENTRE;
+      } else {
+         exchangeRate = DEFAULT_EXCHANGE_RATE;
+      }
+
+   } else if (disciplineFrom == STUDENT_BQN) {
+      campusAtRetrainingCentre = 
+            getCampus (g, PATH_TO_RETRAINING_CENTRE_BQN);
+
+      if (campusAtRetrainingCentre == player
+            || campusAtRetrainingCentre == player + GO8_OFFSET) {
+         exchangeRate = EXCHAGE_RATE_WITH_CENTRE;
+      } else {
+         exchangeRate = DEFAULT_EXCHANGE_RATE;
+      }
+      
+   } else if (disciplineFrom == STUDENT_MJ) {
+      campusAtRetrainingCentre = 
+            getCampus (g, PATH_TO_RETRAINING_CENTRE_MJ_ONE);
+      campusAtRetrainingCentreTwo = 
+            getCampus (g, PATH_TO_RETRAINING_CENTRE_MJ_TWO);
+
+      if (campusAtRetrainingCentre == player
+            || campusAtRetrainingCentre == player + GO8_OFFSET
+            || campusAtRetrainingCentreTwo == player
+            || campusAtRetrainingCentreTwo == player + GO8_OFFSET) {
+         exchangeRate = EXCHAGE_RATE_WITH_CENTRE;
+      } else {
+         exchangeRate = DEFAULT_EXCHANGE_RATE;
+      }
+      
+      
+   } else if (disciplineFrom == STUDENT_MTV) {
+      campusAtRetrainingCentre = 
+            getCampus (g, PATH_TO_RETRAINING_CENTRE_MTV);
+
+      if (campusAtRetrainingCentre == player
+            || campusAtRetrainingCentre == player + GO8_OFFSET) {
+         exchangeRate = EXCHAGE_RATE_WITH_CENTRE;
+      } else {
+         exchangeRate = DEFAULT_EXCHANGE_RATE;
+      }
+      
+   } else if (disciplineFrom == STUDENT_MMONEY) {
+      campusAtRetrainingCentre = 
+            getCampus (g, PATH_TO_RETRAINING_CENTRE_MMONEY_ONE);
+      campusAtRetrainingCentreTwo = 
+            getCampus (g, PATH_TO_RETRAINING_CENTRE_MMONEY_TWO);
+
+      if (campusAtRetrainingCentre == player
+            || campusAtRetrainingCentre == player + GO8_OFFSET
+            || campusAtRetrainingCentreTwo == player
+            || campusAtRetrainingCentreTwo == player + GO8_OFFSET) {
+         exchangeRate = EXCHAGE_RATE_WITH_CENTRE;
+      } else {
+         exchangeRate = DEFAULT_EXCHANGE_RATE;
+      }
+      
+   } 
+
+   // Return the calculated exchange rate
+   return exchangeRate;
 }
 
 
